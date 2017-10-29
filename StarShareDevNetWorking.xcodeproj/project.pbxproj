@@ -1,0 +1,876 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		310382621FA5D68800F0681B /* SSNetWorkCachePolocy.m in Sources */ = {isa = PBXBuildFile; fileRef = 310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */; };
+		310382651FA5D7AD00F0681B /* SSNetWorkCacheHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 310382641FA5D7AD00F0681B /* SSNetWorkCacheHandle.m */; };
+		3114DC6E1FA37B68001A64B2 /* SSNetDomainBeanParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */; };
+		316EEFC41FA5DAC70014470A /* SSYYNetWorkCacheEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 316EEFC31FA5DAC70014470A /* SSYYNetWorkCacheEngine.m */; };
+		316EEFC71FA5DAD60014470A /* SSYYNetWorkCacheHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 316EEFC61FA5DAD60014470A /* SSYYNetWorkCacheHandle.m */; };
+		317A7FFE1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A7FFD1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m */; };
+		317A80011FA2CBEB00C60743 /* SSNetDomainBeanResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A80001FA2CBEB00C60743 /* SSNetDomainBeanResponse.m */; };
+		317A800D1FA2DB6C00C60743 /* SSNetWorkCacheEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A800C1FA2DB6C00C60743 /* SSNetWorkCacheEngine.m */; };
+		317AA6B71FA2F495008EF497 /* SSNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 317AA6B61FA2F495008EF497 /* SSNetworkUtils.m */; };
+		317AA6BA1FA2F4EF008EF497 /* SSNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 317AA6B91FA2F4EF008EF497 /* SSNetworkConfig.m */; };
+		317AA6BD1FA2F72B008EF497 /* SSNetDataCacheMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 317AA6BC1FA2F72B008EF497 /* SSNetDataCacheMeta.m */; };
+		317AA6C01FA3347D008EF497 /* StarShareNetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 317AA6BF1FA3347D008EF497 /* StarShareNetEngine.m */; };
+		318B24A21FA41FF5005D5C66 /* SSNetWorkEngineHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A11FA41FF5005D5C66 /* SSNetWorkEngineHandle.m */; };
+		318B24A61FA42248005D5C66 /* SSAFNetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A41FA42248005D5C66 /* SSAFNetWorkEngine.m */; };
+		318B24A91FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */; };
+		31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC821FA2151A009C0389 /* AppDelegate.m */; };
+		31FBDC861FA2151A009C0389 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC851FA2151A009C0389 /* ViewController.m */; };
+		31FBDC891FA2151A009C0389 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31FBDC871FA2151A009C0389 /* Main.storyboard */; };
+		31FBDC8B1FA2151A009C0389 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31FBDC8A1FA2151A009C0389 /* Assets.xcassets */; };
+		31FBDC8E1FA2151A009C0389 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31FBDC8C1FA2151A009C0389 /* LaunchScreen.storyboard */; };
+		31FBDC911FA2151A009C0389 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC901FA2151A009C0389 /* main.m */; };
+		31FBDC9B1FA2151A009C0389 /* StarShareDevNetWorkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC9A1FA2151A009C0389 /* StarShareDevNetWorkingTests.m */; };
+		31FBDCA61FA2151A009C0389 /* StarShareDevNetWorkingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDCA51FA2151A009C0389 /* StarShareDevNetWorkingUITests.m */; };
+		31FBDCBD1FA2220E009C0389 /* SSNetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDCBC1FA2220E009C0389 /* SSNetWorkEngine.m */; };
+		31FBDCC51FA24232009C0389 /* SSNetRequestData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDCC41FA24232009C0389 /* SSNetRequestData.m */; };
+		31FC65271FA3A1FE003A939E /* HomePageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FC65261FA3A1FE003A939E /* HomePageRequest.m */; };
+		31FC652A1FA3A20F003A939E /* HomePageResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FC65291FA3A20F003A939E /* HomePageResponse.m */; };
+		31FC652D1FA3A605003A939E /* HomePageCachePolocy.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FC652C1FA3A605003A939E /* HomePageCachePolocy.m */; };
+		9BEE812FFEDAF8D23C83FA72 /* libPods-StarShareDevNetWorking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BD205F1157EC0A513B82C2 /* libPods-StarShareDevNetWorking.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		31FBDC971FA2151A009C0389 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 31FBDC761FA2151A009C0389 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31FBDC7D1FA2151A009C0389;
+			remoteInfo = StarShareDevNetWorking;
+		};
+		31FBDCA21FA2151A009C0389 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 31FBDC761FA2151A009C0389 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31FBDC7D1FA2151A009C0389;
+			remoteInfo = StarShareDevNetWorking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3103825F1FA5D58000F0681B /* SSNetRequestCachePolocyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestCachePolocyProtocol.h; sourceTree = "<group>"; };
+		310382601FA5D68800F0681B /* SSNetWorkCachePolocy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCachePolocy.h; sourceTree = "<group>"; };
+		310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCachePolocy.m; sourceTree = "<group>"; };
+		310382631FA5D7AD00F0681B /* SSNetWorkCacheHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCacheHandle.h; sourceTree = "<group>"; };
+		310382641FA5D7AD00F0681B /* SSNetWorkCacheHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCacheHandle.m; sourceTree = "<group>"; };
+		3114DC6B1FA37A3E001A64B2 /* SSNetDomainRequestHelperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainRequestHelperProtocol.h; sourceTree = "<group>"; };
+		3114DC6C1FA37B68001A64B2 /* SSNetDomainBeanParent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainBeanParent.h; sourceTree = "<group>"; };
+		3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetDomainBeanParent.m; sourceTree = "<group>"; };
+		3116A6011FA2B20D00AC8C70 /* SSNetRequestHandleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestHandleProtocol.h; sourceTree = "<group>"; };
+		3116A6031FA2B20D00AC8C70 /* SSNetRequestProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestProtocol.h; sourceTree = "<group>"; };
+		3116A6081FA2B2C100AC8C70 /* SSNetDomainRequestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainRequestProtocol.h; sourceTree = "<group>"; };
+		3116A6091FA2B2F600AC8C70 /* SSNetDomainResponseProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainResponseProtocol.h; sourceTree = "<group>"; };
+		316EEFC21FA5DAC70014470A /* SSYYNetWorkCacheEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSYYNetWorkCacheEngine.h; sourceTree = "<group>"; };
+		316EEFC31FA5DAC70014470A /* SSYYNetWorkCacheEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSYYNetWorkCacheEngine.m; sourceTree = "<group>"; };
+		316EEFC51FA5DAD60014470A /* SSYYNetWorkCacheHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSYYNetWorkCacheHandle.h; sourceTree = "<group>"; };
+		316EEFC61FA5DAD60014470A /* SSYYNetWorkCacheHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSYYNetWorkCacheHandle.m; sourceTree = "<group>"; };
+		316EEFC81FA61BBA0014470A /* StarShareDevNetWorking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarShareDevNetWorking.h; sourceTree = "<group>"; };
+		317A7FFC1FA2CBDE00C60743 /* SSNetDomainBeanRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainBeanRequest.h; sourceTree = "<group>"; };
+		317A7FFD1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetDomainBeanRequest.m; sourceTree = "<group>"; };
+		317A7FFF1FA2CBEB00C60743 /* SSNetDomainBeanResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainBeanResponse.h; sourceTree = "<group>"; };
+		317A80001FA2CBEB00C60743 /* SSNetDomainBeanResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetDomainBeanResponse.m; sourceTree = "<group>"; };
+		317A80061FA2D85300C60743 /* SSNetWorkCacheHandleProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCacheHandleProtocol.h; sourceTree = "<group>"; };
+		317A800B1FA2DB6C00C60743 /* SSNetWorkCacheEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCacheEngine.h; sourceTree = "<group>"; };
+		317A800C1FA2DB6C00C60743 /* SSNetWorkCacheEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCacheEngine.m; sourceTree = "<group>"; };
+		317A80111FA2DD2800C60743 /* SSNetWorkCacheProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCacheProtocol.h; sourceTree = "<group>"; };
+		317AA6B51FA2F495008EF497 /* SSNetworkUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetworkUtils.h; sourceTree = "<group>"; };
+		317AA6B61FA2F495008EF497 /* SSNetworkUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetworkUtils.m; sourceTree = "<group>"; };
+		317AA6B81FA2F4EF008EF497 /* SSNetworkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetworkConfig.h; sourceTree = "<group>"; };
+		317AA6B91FA2F4EF008EF497 /* SSNetworkConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetworkConfig.m; sourceTree = "<group>"; };
+		317AA6BB1FA2F72B008EF497 /* SSNetDataCacheMeta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDataCacheMeta.h; sourceTree = "<group>"; };
+		317AA6BC1FA2F72B008EF497 /* SSNetDataCacheMeta.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetDataCacheMeta.m; sourceTree = "<group>"; };
+		317AA6BE1FA3347D008EF497 /* StarShareNetEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarShareNetEngine.h; sourceTree = "<group>"; };
+		317AA6BF1FA3347D008EF497 /* StarShareNetEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarShareNetEngine.m; sourceTree = "<group>"; };
+		318B24A01FA41FF5005D5C66 /* SSNetWorkEngineHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkEngineHandle.h; sourceTree = "<group>"; };
+		318B24A11FA41FF5005D5C66 /* SSNetWorkEngineHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkEngineHandle.m; sourceTree = "<group>"; };
+		318B24A41FA42248005D5C66 /* SSAFNetWorkEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAFNetWorkEngine.m; sourceTree = "<group>"; };
+		318B24A51FA42248005D5C66 /* SSAFNetWorkEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAFNetWorkEngine.h; sourceTree = "<group>"; };
+		318B24A71FA4227F005D5C66 /* SSAFNetWorkEngineHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAFNetWorkEngineHandle.h; sourceTree = "<group>"; };
+		318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAFNetWorkEngineHandle.m; sourceTree = "<group>"; };
+		31FBDC7E1FA2151A009C0389 /* StarShareDevNetWorking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarShareDevNetWorking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		31FBDC811FA2151A009C0389 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		31FBDC821FA2151A009C0389 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		31FBDC841FA2151A009C0389 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		31FBDC851FA2151A009C0389 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		31FBDC881FA2151A009C0389 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		31FBDC8A1FA2151A009C0389 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		31FBDC8D1FA2151A009C0389 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		31FBDC8F1FA2151A009C0389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31FBDC901FA2151A009C0389 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		31FBDC961FA2151A009C0389 /* StarShareDevNetWorkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarShareDevNetWorkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		31FBDC9A1FA2151A009C0389 /* StarShareDevNetWorkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarShareDevNetWorkingTests.m; sourceTree = "<group>"; };
+		31FBDC9C1FA2151A009C0389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31FBDCA11FA2151A009C0389 /* StarShareDevNetWorkingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarShareDevNetWorkingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		31FBDCA51FA2151A009C0389 /* StarShareDevNetWorkingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarShareDevNetWorkingUITests.m; sourceTree = "<group>"; };
+		31FBDCA71FA2151A009C0389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31FBDCB81FA21AF5009C0389 /* SSNetWorkConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkConstants.h; sourceTree = "<group>"; };
+		31FBDCBB1FA2220E009C0389 /* SSNetWorkEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkEngine.h; sourceTree = "<group>"; };
+		31FBDCBC1FA2220E009C0389 /* SSNetWorkEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkEngine.m; sourceTree = "<group>"; };
+		31FBDCC31FA24232009C0389 /* SSNetRequestData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetRequestData.h; sourceTree = "<group>"; };
+		31FBDCC41FA24232009C0389 /* SSNetRequestData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetRequestData.m; sourceTree = "<group>"; };
+		31FC65241FA3900B003A939E /* SSNetDomainResponseHelperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainResponseHelperProtocol.h; sourceTree = "<group>"; };
+		31FC65251FA3A1FE003A939E /* HomePageRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageRequest.h; sourceTree = "<group>"; };
+		31FC65261FA3A1FE003A939E /* HomePageRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageRequest.m; sourceTree = "<group>"; };
+		31FC65281FA3A20F003A939E /* HomePageResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageResponse.h; sourceTree = "<group>"; };
+		31FC65291FA3A20F003A939E /* HomePageResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageResponse.m; sourceTree = "<group>"; };
+		31FC652B1FA3A605003A939E /* HomePageCachePolocy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageCachePolocy.h; sourceTree = "<group>"; };
+		31FC652C1FA3A605003A939E /* HomePageCachePolocy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageCachePolocy.m; sourceTree = "<group>"; };
+		7435F9214FDCEF1BDFEC1F2A /* Pods-StarShareDevNetWorking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarShareDevNetWorking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StarShareDevNetWorking/Pods-StarShareDevNetWorking.debug.xcconfig"; sourceTree = "<group>"; };
+		BD846BE230BEBA62DCF42830 /* Pods-StarShareDevNetWorking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StarShareDevNetWorking.release.xcconfig"; path = "Pods/Target Support Files/Pods-StarShareDevNetWorking/Pods-StarShareDevNetWorking.release.xcconfig"; sourceTree = "<group>"; };
+		E0BD205F1157EC0A513B82C2 /* libPods-StarShareDevNetWorking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StarShareDevNetWorking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		31FBDC7B1FA2151A009C0389 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BEE812FFEDAF8D23C83FA72 /* libPods-StarShareDevNetWorking.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC931FA2151A009C0389 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC9E1FA2151A009C0389 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3116A6001FA2B20D00AC8C70 /* NetworkRequestInterface */ = {
+			isa = PBXGroup;
+			children = (
+				3116A6031FA2B20D00AC8C70 /* SSNetRequestProtocol.h */,
+				3116A6011FA2B20D00AC8C70 /* SSNetRequestHandleProtocol.h */,
+				3103825F1FA5D58000F0681B /* SSNetRequestCachePolocyProtocol.h */,
+			);
+			path = NetworkRequestInterface;
+			sourceTree = "<group>";
+		};
+		3116A6071FA2B25200AC8C70 /* NetworkDomainInterface */ = {
+			isa = PBXGroup;
+			children = (
+				3116A6081FA2B2C100AC8C70 /* SSNetDomainRequestProtocol.h */,
+				3116A6091FA2B2F600AC8C70 /* SSNetDomainResponseProtocol.h */,
+				3114DC6B1FA37A3E001A64B2 /* SSNetDomainRequestHelperProtocol.h */,
+				31FC65241FA3900B003A939E /* SSNetDomainResponseHelperProtocol.h */,
+			);
+			path = NetworkDomainInterface;
+			sourceTree = "<group>";
+		};
+		316EEFC11FA5DAA50014470A /* YYCache */ = {
+			isa = PBXGroup;
+			children = (
+				316EEFC21FA5DAC70014470A /* SSYYNetWorkCacheEngine.h */,
+				316EEFC31FA5DAC70014470A /* SSYYNetWorkCacheEngine.m */,
+				316EEFC51FA5DAD60014470A /* SSYYNetWorkCacheHandle.h */,
+				316EEFC61FA5DAD60014470A /* SSYYNetWorkCacheHandle.m */,
+			);
+			path = YYCache;
+			sourceTree = "<group>";
+		};
+		317A7FFB1FA2CB9C00C60743 /* NetworkDomainBean */ = {
+			isa = PBXGroup;
+			children = (
+				3114DC6C1FA37B68001A64B2 /* SSNetDomainBeanParent.h */,
+				3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */,
+				317A7FFC1FA2CBDE00C60743 /* SSNetDomainBeanRequest.h */,
+				317A7FFD1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m */,
+				317A7FFF1FA2CBEB00C60743 /* SSNetDomainBeanResponse.h */,
+				317A80001FA2CBEB00C60743 /* SSNetDomainBeanResponse.m */,
+			);
+			path = NetworkDomainBean;
+			sourceTree = "<group>";
+		};
+		317A80031FA2D80B00C60743 /* NetWorkCache */ = {
+			isa = PBXGroup;
+			children = (
+				316EEFC11FA5DAA50014470A /* YYCache */,
+				317A800B1FA2DB6C00C60743 /* SSNetWorkCacheEngine.h */,
+				317A800C1FA2DB6C00C60743 /* SSNetWorkCacheEngine.m */,
+				310382631FA5D7AD00F0681B /* SSNetWorkCacheHandle.h */,
+				310382641FA5D7AD00F0681B /* SSNetWorkCacheHandle.m */,
+			);
+			path = NetWorkCache;
+			sourceTree = "<group>";
+		};
+		317A80041FA2D80B00C60743 /* NetWorkCacheInterface */ = {
+			isa = PBXGroup;
+			children = (
+				317A80111FA2DD2800C60743 /* SSNetWorkCacheProtocol.h */,
+				317A80061FA2D85300C60743 /* SSNetWorkCacheHandleProtocol.h */,
+			);
+			path = NetWorkCacheInterface;
+			sourceTree = "<group>";
+		};
+		317AA6B41FA2F479008EF497 /* NetworkUtils */ = {
+			isa = PBXGroup;
+			children = (
+				317AA6B51FA2F495008EF497 /* SSNetworkUtils.h */,
+				317AA6B61FA2F495008EF497 /* SSNetworkUtils.m */,
+			);
+			name = NetworkUtils;
+			path = StarShareDevNetWorking/StarShareDevNetWorking/NetworkUtils;
+			sourceTree = SOURCE_ROOT;
+		};
+		318B24A31FA42248005D5C66 /* AFNetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				318B24A51FA42248005D5C66 /* SSAFNetWorkEngine.h */,
+				318B24A41FA42248005D5C66 /* SSAFNetWorkEngine.m */,
+				318B24A71FA4227F005D5C66 /* SSAFNetWorkEngineHandle.h */,
+				318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */,
+			);
+			path = AFNetWorking;
+			sourceTree = "<group>";
+		};
+		31FBDC751FA2151A009C0389 = {
+			isa = PBXGroup;
+			children = (
+				31FBDC801FA2151A009C0389 /* StarShareDevNetWorking */,
+				31FBDC991FA2151A009C0389 /* StarShareDevNetWorkingTests */,
+				31FBDCA41FA2151A009C0389 /* StarShareDevNetWorkingUITests */,
+				31FBDC7F1FA2151A009C0389 /* Products */,
+				8F7B8E37C817956A654856F0 /* Pods */,
+				D4F809DEB713CE6D246B68CA /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		31FBDC7F1FA2151A009C0389 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDC7E1FA2151A009C0389 /* StarShareDevNetWorking.app */,
+				31FBDC961FA2151A009C0389 /* StarShareDevNetWorkingTests.xctest */,
+				31FBDCA11FA2151A009C0389 /* StarShareDevNetWorkingUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		31FBDC801FA2151A009C0389 /* StarShareDevNetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDCB31FA21746009C0389 /* StarShareDevNetWorking */,
+				31FBDC811FA2151A009C0389 /* AppDelegate.h */,
+				31FBDC821FA2151A009C0389 /* AppDelegate.m */,
+				31FBDC841FA2151A009C0389 /* ViewController.h */,
+				31FBDC851FA2151A009C0389 /* ViewController.m */,
+				31FBDC871FA2151A009C0389 /* Main.storyboard */,
+				31FBDC8A1FA2151A009C0389 /* Assets.xcassets */,
+				31FBDC8C1FA2151A009C0389 /* LaunchScreen.storyboard */,
+				31FBDC8F1FA2151A009C0389 /* Info.plist */,
+				31FBDC901FA2151A009C0389 /* main.m */,
+				31FC65251FA3A1FE003A939E /* HomePageRequest.h */,
+				31FC65261FA3A1FE003A939E /* HomePageRequest.m */,
+				31FC65281FA3A20F003A939E /* HomePageResponse.h */,
+				31FC65291FA3A20F003A939E /* HomePageResponse.m */,
+				31FC652B1FA3A605003A939E /* HomePageCachePolocy.h */,
+				31FC652C1FA3A605003A939E /* HomePageCachePolocy.m */,
+			);
+			path = StarShareDevNetWorking;
+			sourceTree = "<group>";
+		};
+		31FBDC991FA2151A009C0389 /* StarShareDevNetWorkingTests */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDC9A1FA2151A009C0389 /* StarShareDevNetWorkingTests.m */,
+				31FBDC9C1FA2151A009C0389 /* Info.plist */,
+			);
+			path = StarShareDevNetWorkingTests;
+			sourceTree = "<group>";
+		};
+		31FBDCA41FA2151A009C0389 /* StarShareDevNetWorkingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDCA51FA2151A009C0389 /* StarShareDevNetWorkingUITests.m */,
+				31FBDCA71FA2151A009C0389 /* Info.plist */,
+			);
+			path = StarShareDevNetWorkingUITests;
+			sourceTree = "<group>";
+		};
+		31FBDCB31FA21746009C0389 /* StarShareDevNetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				317AA6B41FA2F479008EF497 /* NetworkUtils */,
+				31FBDCB71FA21AE4009C0389 /* NetWorkConstants */,
+				31FBDCC21FA24229009C0389 /* NetWorkObject */,
+				3116A6001FA2B20D00AC8C70 /* NetworkRequestInterface */,
+				31FBDCBA1FA22204009C0389 /* NetWorkEngine */,
+				3116A6071FA2B25200AC8C70 /* NetworkDomainInterface */,
+				317A7FFB1FA2CB9C00C60743 /* NetworkDomainBean */,
+				317A80041FA2D80B00C60743 /* NetWorkCacheInterface */,
+				317A80031FA2D80B00C60743 /* NetWorkCache */,
+				317AA6B81FA2F4EF008EF497 /* SSNetworkConfig.h */,
+				317AA6B91FA2F4EF008EF497 /* SSNetworkConfig.m */,
+				317AA6BE1FA3347D008EF497 /* StarShareNetEngine.h */,
+				317AA6BF1FA3347D008EF497 /* StarShareNetEngine.m */,
+				316EEFC81FA61BBA0014470A /* StarShareDevNetWorking.h */,
+			);
+			path = StarShareDevNetWorking;
+			sourceTree = "<group>";
+		};
+		31FBDCB71FA21AE4009C0389 /* NetWorkConstants */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDCB81FA21AF5009C0389 /* SSNetWorkConstants.h */,
+			);
+			path = NetWorkConstants;
+			sourceTree = "<group>";
+		};
+		31FBDCBA1FA22204009C0389 /* NetWorkEngine */ = {
+			isa = PBXGroup;
+			children = (
+				318B24A31FA42248005D5C66 /* AFNetWorking */,
+				31FBDCBB1FA2220E009C0389 /* SSNetWorkEngine.h */,
+				31FBDCBC1FA2220E009C0389 /* SSNetWorkEngine.m */,
+				318B24A01FA41FF5005D5C66 /* SSNetWorkEngineHandle.h */,
+				318B24A11FA41FF5005D5C66 /* SSNetWorkEngineHandle.m */,
+				310382601FA5D68800F0681B /* SSNetWorkCachePolocy.h */,
+				310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */,
+			);
+			path = NetWorkEngine;
+			sourceTree = "<group>";
+		};
+		31FBDCC21FA24229009C0389 /* NetWorkObject */ = {
+			isa = PBXGroup;
+			children = (
+				31FBDCC31FA24232009C0389 /* SSNetRequestData.h */,
+				31FBDCC41FA24232009C0389 /* SSNetRequestData.m */,
+				317AA6BB1FA2F72B008EF497 /* SSNetDataCacheMeta.h */,
+				317AA6BC1FA2F72B008EF497 /* SSNetDataCacheMeta.m */,
+			);
+			path = NetWorkObject;
+			sourceTree = "<group>";
+		};
+		8F7B8E37C817956A654856F0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7435F9214FDCEF1BDFEC1F2A /* Pods-StarShareDevNetWorking.debug.xcconfig */,
+				BD846BE230BEBA62DCF42830 /* Pods-StarShareDevNetWorking.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D4F809DEB713CE6D246B68CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E0BD205F1157EC0A513B82C2 /* libPods-StarShareDevNetWorking.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		31FBDC7D1FA2151A009C0389 /* StarShareDevNetWorking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31FBDCAA1FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorking" */;
+			buildPhases = (
+				20E7434257BEA5D69011B9CD /* [CP] Check Pods Manifest.lock */,
+				31FBDC7A1FA2151A009C0389 /* Sources */,
+				31FBDC7B1FA2151A009C0389 /* Frameworks */,
+				31FBDC7C1FA2151A009C0389 /* Resources */,
+				9FB05F074D55B0E78FDF4D4D /* [CP] Embed Pods Frameworks */,
+				1003B4F490CE8BA5CF14622A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StarShareDevNetWorking;
+			productName = StarShareDevNetWorking;
+			productReference = 31FBDC7E1FA2151A009C0389 /* StarShareDevNetWorking.app */;
+			productType = "com.apple.product-type.application";
+		};
+		31FBDC951FA2151A009C0389 /* StarShareDevNetWorkingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31FBDCAD1FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorkingTests" */;
+			buildPhases = (
+				31FBDC921FA2151A009C0389 /* Sources */,
+				31FBDC931FA2151A009C0389 /* Frameworks */,
+				31FBDC941FA2151A009C0389 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				31FBDC981FA2151A009C0389 /* PBXTargetDependency */,
+			);
+			name = StarShareDevNetWorkingTests;
+			productName = StarShareDevNetWorkingTests;
+			productReference = 31FBDC961FA2151A009C0389 /* StarShareDevNetWorkingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		31FBDCA01FA2151A009C0389 /* StarShareDevNetWorkingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31FBDCB01FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorkingUITests" */;
+			buildPhases = (
+				31FBDC9D1FA2151A009C0389 /* Sources */,
+				31FBDC9E1FA2151A009C0389 /* Frameworks */,
+				31FBDC9F1FA2151A009C0389 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				31FBDCA31FA2151A009C0389 /* PBXTargetDependency */,
+			);
+			name = StarShareDevNetWorkingUITests;
+			productName = StarShareDevNetWorkingUITests;
+			productReference = 31FBDCA11FA2151A009C0389 /* StarShareDevNetWorkingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		31FBDC761FA2151A009C0389 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = BUBUKO;
+				TargetAttributes = {
+					31FBDC7D1FA2151A009C0389 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+					31FBDC951FA2151A009C0389 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 31FBDC7D1FA2151A009C0389;
+					};
+					31FBDCA01FA2151A009C0389 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 31FBDC7D1FA2151A009C0389;
+					};
+				};
+			};
+			buildConfigurationList = 31FBDC791FA2151A009C0389 /* Build configuration list for PBXProject "StarShareDevNetWorking" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 31FBDC751FA2151A009C0389;
+			productRefGroup = 31FBDC7F1FA2151A009C0389 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				31FBDC7D1FA2151A009C0389 /* StarShareDevNetWorking */,
+				31FBDC951FA2151A009C0389 /* StarShareDevNetWorkingTests */,
+				31FBDCA01FA2151A009C0389 /* StarShareDevNetWorkingUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		31FBDC7C1FA2151A009C0389 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31FBDC8E1FA2151A009C0389 /* LaunchScreen.storyboard in Resources */,
+				31FBDC8B1FA2151A009C0389 /* Assets.xcassets in Resources */,
+				31FBDC891FA2151A009C0389 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC941FA2151A009C0389 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC9F1FA2151A009C0389 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1003B4F490CE8BA5CF14622A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StarShareDevNetWorking/Pods-StarShareDevNetWorking-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		20E7434257BEA5D69011B9CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StarShareDevNetWorking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9FB05F074D55B0E78FDF4D4D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StarShareDevNetWorking/Pods-StarShareDevNetWorking-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		31FBDC7A1FA2151A009C0389 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				317A800D1FA2DB6C00C60743 /* SSNetWorkCacheEngine.m in Sources */,
+				317AA6BD1FA2F72B008EF497 /* SSNetDataCacheMeta.m in Sources */,
+				31FBDC861FA2151A009C0389 /* ViewController.m in Sources */,
+				318B24A61FA42248005D5C66 /* SSAFNetWorkEngine.m in Sources */,
+				31FBDC911FA2151A009C0389 /* main.m in Sources */,
+				31FBDCBD1FA2220E009C0389 /* SSNetWorkEngine.m in Sources */,
+				317AA6C01FA3347D008EF497 /* StarShareNetEngine.m in Sources */,
+				317AA6B71FA2F495008EF497 /* SSNetworkUtils.m in Sources */,
+				3114DC6E1FA37B68001A64B2 /* SSNetDomainBeanParent.m in Sources */,
+				31FC652A1FA3A20F003A939E /* HomePageResponse.m in Sources */,
+				317A7FFE1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m in Sources */,
+				31FC65271FA3A1FE003A939E /* HomePageRequest.m in Sources */,
+				310382621FA5D68800F0681B /* SSNetWorkCachePolocy.m in Sources */,
+				31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */,
+				318B24A21FA41FF5005D5C66 /* SSNetWorkEngineHandle.m in Sources */,
+				317A80011FA2CBEB00C60743 /* SSNetDomainBeanResponse.m in Sources */,
+				317AA6BA1FA2F4EF008EF497 /* SSNetworkConfig.m in Sources */,
+				316EEFC41FA5DAC70014470A /* SSYYNetWorkCacheEngine.m in Sources */,
+				318B24A91FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m in Sources */,
+				31FC652D1FA3A605003A939E /* HomePageCachePolocy.m in Sources */,
+				310382651FA5D7AD00F0681B /* SSNetWorkCacheHandle.m in Sources */,
+				31FBDCC51FA24232009C0389 /* SSNetRequestData.m in Sources */,
+				316EEFC71FA5DAD60014470A /* SSYYNetWorkCacheHandle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC921FA2151A009C0389 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31FBDC9B1FA2151A009C0389 /* StarShareDevNetWorkingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31FBDC9D1FA2151A009C0389 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31FBDCA61FA2151A009C0389 /* StarShareDevNetWorkingUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		31FBDC981FA2151A009C0389 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31FBDC7D1FA2151A009C0389 /* StarShareDevNetWorking */;
+			targetProxy = 31FBDC971FA2151A009C0389 /* PBXContainerItemProxy */;
+		};
+		31FBDCA31FA2151A009C0389 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31FBDC7D1FA2151A009C0389 /* StarShareDevNetWorking */;
+			targetProxy = 31FBDCA21FA2151A009C0389 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		31FBDC871FA2151A009C0389 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				31FBDC881FA2151A009C0389 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		31FBDC8C1FA2151A009C0389 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				31FBDC8D1FA2151A009C0389 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		31FBDCA81FA2151A009C0389 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		31FBDCA91FA2151A009C0389 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		31FBDCAB1FA2151A009C0389 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7435F9214FDCEF1BDFEC1F2A /* Pods-StarShareDevNetWorking.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		31FBDCAC1FA2151A009C0389 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD846BE230BEBA62DCF42830 /* Pods-StarShareDevNetWorking.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		31FBDCAE1FA2151A009C0389 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StarShareDevNetWorking.app/StarShareDevNetWorking";
+			};
+			name = Debug;
+		};
+		31FBDCAF1FA2151A009C0389 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StarShareDevNetWorking.app/StarShareDevNetWorking";
+			};
+			name = Release;
+		};
+		31FBDCB11FA2151A009C0389 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorkingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorkingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StarShareDevNetWorking;
+			};
+			name = Debug;
+		};
+		31FBDCB21FA2151A009C0389 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7524R5UJ2G;
+				INFOPLIST_FILE = StarShareDevNetWorkingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.starsharenetwork.StarShareDevNetWorkingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StarShareDevNetWorking;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		31FBDC791FA2151A009C0389 /* Build configuration list for PBXProject "StarShareDevNetWorking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31FBDCA81FA2151A009C0389 /* Debug */,
+				31FBDCA91FA2151A009C0389 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		31FBDCAA1FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31FBDCAB1FA2151A009C0389 /* Debug */,
+				31FBDCAC1FA2151A009C0389 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		31FBDCAD1FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorkingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31FBDCAE1FA2151A009C0389 /* Debug */,
+				31FBDCAF1FA2151A009C0389 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		31FBDCB01FA2151A009C0389 /* Build configuration list for PBXNativeTarget "StarShareDevNetWorkingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				31FBDCB11FA2151A009C0389 /* Debug */,
+				31FBDCB21FA2151A009C0389 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 31FBDC761FA2151A009C0389 /* Project object */;
+}

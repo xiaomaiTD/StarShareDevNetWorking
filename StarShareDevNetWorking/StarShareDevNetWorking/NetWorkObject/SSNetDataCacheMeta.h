@@ -1,0 +1,18 @@
+//
+//  SSNetDataCacheMeta.h
+//  StarShareDevNetWorking
+//
+//  Created by BUBUKO on 2017/10/27.
+//  Copyright © 2017年 BUBUKO. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface SSNetDataCacheMeta : NSObject<NSSecureCoding>
+
+@property (nonatomic, assign) long long version;
+@property (nonatomic, strong) NSString *sensitiveDataString;
+@property (nonatomic, strong) NSDate *creationDate;
+@property (nonatomic, strong) NSString *appVersionString;
+@end
+
