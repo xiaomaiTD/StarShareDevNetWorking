@@ -218,13 +218,19 @@
     
     ///< 返回缓存数据
     if (cacheData) {
+      
+      ((SSNetDomainBeanParent*)requestBean).responseObject = cacheData;
+      ((SSNetDomainBeanParent*)requestBean).dataFromCache = YES;
+      
+      ((SSNetDomainBeanParent*)responseBean).responseObject = cacheData;
+      ((SSNetDomainBeanParent*)responseBean).dataFromCache = YES;
+      
+      ///< 告诉请求完成，进行模型解析等操作
+      SS_SAFE_SEND_MESSAGE(responseBean, respondBeanComplement:requestBean:isDataFromCache:){
+        [responseBean respondBeanComplement:responseBean requestBean:requestBean isDataFromCache:YES];
+      }
+      
       if (successed) {
-        ((SSNetDomainBeanParent*)requestBean).responseObject = cacheData;
-        ((SSNetDomainBeanParent*)requestBean).dataFromCache = YES;
-        
-        ((SSNetDomainBeanParent*)responseBean).responseObject = cacheData;
-        ((SSNetDomainBeanParent*)responseBean).dataFromCache = YES;
-        
         successed(requestBean,responseBean,YES);
       }
       if (end != NULL) {
@@ -330,8 +336,8 @@
         }
         
         ///< 告诉请求完成，进行模型解析等操作
-        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondBeanComplement:requestBean:){
-          [domainBeanResponse respondBeanComplement:domainBeanResponse requestBean:domainBeanRequest];
+        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondBeanComplement:requestBean:isDataFromCache:){
+          [domainBeanResponse respondBeanComplement:domainBeanResponse requestBean:domainBeanRequest isDataFromCache:NO];
         }
         
         if (successed != NULL) {

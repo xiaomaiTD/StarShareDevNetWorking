@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SSNetDomainResponseProtocol <SSNetDomainResponseHelperProtocol>
 
 @required
-- (void)respondBeanComplement:(in id)respondBean requestBean:(in id)requestBean;
+- (void)respondBeanComplement:(in id)respondBean requestBean:(in id)requestBean isDataFromCache:(BOOL)isDataFromCache;
 @end
 
 NS_ASSUME_NONNULL_END

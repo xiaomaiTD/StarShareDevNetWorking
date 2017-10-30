@@ -13,7 +13,7 @@
 
 #pragma mark - <SSNetDomainResponseProtocol>
 
-- (void)respondBeanComplement:(in id)respondBean requestBean:(in id)requestBean
+- (void)respondBeanComplement:(in id)respondBean requestBean:(in id)requestBean isDataFromCache:(BOOL)isDataFromCache
 {
   
 }
