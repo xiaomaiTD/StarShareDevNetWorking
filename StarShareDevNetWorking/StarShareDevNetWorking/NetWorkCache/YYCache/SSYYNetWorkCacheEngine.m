@@ -88,12 +88,49 @@
       metadata.creationDate = [NSDate date];
       metadata.appVersionString = [SSNetworkUtils appVersionString];
       
-      if (cachePolicy == SSNetRequestCachePolicyMemory) {
-        [cache.memoryCache setObject:domainBeanResponse.responseObject forKey:cacheName];
-        [cache.memoryCache setObject:metadata forKey:cacheMetaName];
+      ///< 是否外部拦截缓存事件
+      BOOL shouldHoldCacheEvent = NO;
+      SS_SAFE_SEND_MESSAGE(polocy, shouldHoldCacheEvent){
+        shouldHoldCacheEvent = [polocy shouldHoldCacheEvent];
+      }
+      
+      if (shouldHoldCacheEvent) {
+        BOOL canCache = NO;
+        SS_SAFE_SEND_MESSAGE(polocy, canCacheEvent:){
+          canCache = [polocy canCacheEvent:requestBean];
+        }
+        if (canCache) {
+          id cacheObjectByFilter;
+          SS_SAFE_SEND_MESSAGE(polocy, cacheObjectFilter:){
+            cacheObjectByFilter = [polocy cacheObjectFilter:domainBeanResponse.responseObject];
+          }
+          if (cacheObjectByFilter == nil) {
+            if (error) {
+              *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                           code:SSNetWorkCacheErrorInvalidCacheData
+                                       userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 数据过滤失败！",requestBean]}];
+            }
+            break;
+          }
+          
+          if (cachePolicy == SSNetRequestCachePolicyMemory) {
+            [cache.memoryCache setObject:cacheObjectByFilter forKey:cacheName];
+            [cache.memoryCache setObject:metadata forKey:cacheMetaName];
+          }else{
+            [cache setObject:cacheObjectByFilter forKey:cacheName];
+            [cache setObject:metadata forKey:cacheMetaName];
+          }
+        }else{
+          SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should write cache!");
+        }
       }else{
-        [cache setObject:domainBeanResponse.responseObject forKey:cacheName];
-        [cache setObject:metadata forKey:cacheMetaName];
+        if (cachePolicy == SSNetRequestCachePolicyMemory) {
+          [cache.memoryCache setObject:domainBeanResponse.responseObject forKey:cacheName];
+          [cache.memoryCache setObject:metadata forKey:cacheMetaName];
+        }else{
+          [cache setObject:domainBeanResponse.responseObject forKey:cacheName];
+          [cache setObject:metadata forKey:cacheMetaName];
+        }
       }
       
       SSYYNetWorkCacheHandle *handle = [[SSYYNetWorkCacheHandle alloc] initWithCache:cache key:cacheName];
@@ -236,10 +273,49 @@
       }
       
       id cacheObject = nil;
-      if (cachePolicy == SSNetRequestCachePolicyMemory) {
-        cacheObject = [cache.memoryCache objectForKey:cacheName];
+      
+      ///< 是否外部拦截缓存事件
+      BOOL shouldHoldCacheEvent = NO;
+      SS_SAFE_SEND_MESSAGE(polocy, shouldHoldCacheEvent){
+        shouldHoldCacheEvent = [polocy shouldHoldCacheEvent];
+      }
+      
+      if(shouldHoldCacheEvent){
+        BOOL canCache = NO;
+        SS_SAFE_SEND_MESSAGE(polocy, canCacheEvent:){
+          canCache = [polocy canCacheEvent:requestBean];
+        }
+        if (canCache) {
+          id cacheObjectWillFilter = nil;
+          if (cachePolicy == SSNetRequestCachePolicyMemory) {
+            cacheObjectWillFilter = [cache.memoryCache objectForKey:cacheName];
+          }else{
+            cacheObjectWillFilter = [cache objectForKey:cacheName];
+          }
+          
+          id cacheObjectByFilter;
+          SS_SAFE_SEND_MESSAGE(polocy, cacheObjectFilter:){
+            cacheObjectByFilter = [polocy cacheObjectFilter:cacheObjectWillFilter];
+          }
+          if (cacheObjectByFilter == nil) {
+            if (error) {
+              *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                           code:SSNetWorkCacheErrorInvalidCacheData
+                                       userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 数据过滤失败！",requestBean]}];
+            }
+            break;
+          }
+          
+          cacheObject = cacheObjectByFilter;
+        }else{
+          SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should read cache!");
+        }
       }else{
-        cacheObject = [cache objectForKey:cacheName];
+        if (cachePolicy == SSNetRequestCachePolicyMemory) {
+          cacheObject = [cache.memoryCache objectForKey:cacheName];
+        }else{
+          cacheObject = [cache objectForKey:cacheName];
+        }
       }
       
       if (cacheObject == nil) {

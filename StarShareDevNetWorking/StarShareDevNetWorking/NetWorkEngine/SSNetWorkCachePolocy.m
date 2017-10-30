@@ -42,4 +42,18 @@
   return YES;
 }
 
+- (BOOL)shouldHoldCacheEvent
+{
+  return NO;
+}
+
+- (BOOL)canCacheEvent:(nonnull in id)requestBean
+{
+  return NO;
+}
+
+- (nonnull id)cacheObjectFilter:(nonnull in id)object
+{
+  return object;
+}
 @end

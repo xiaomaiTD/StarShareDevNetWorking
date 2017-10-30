@@ -19,4 +19,7 @@
 - (nullable id)cacheSensitiveData;
 - (BOOL)writeCacheAsynchronously;
 
+- (BOOL)shouldHoldCacheEvent;
+- (BOOL)canCacheEvent:(nonnull in id)requestBean;
+- (nonnull id)cacheObjectFilter:(nonnull in id)object;
 @end
