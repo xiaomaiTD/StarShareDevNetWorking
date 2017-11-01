@@ -20,7 +20,8 @@ FOUNDATION_EXPORT void SSNetWorkLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,
 + (BOOL)validateResumeData:(NSData *)data;
 + (NSString *)requestMethod:(SSNetRequestMethod)method;
 + (NSString *)requestPriority:(SSNetRequestPriority)priority;
-+ (NSString *)cachePolicy:(SSNetRequestCachePolicy)policy;
++ (NSString *)cachePolicy:(SSNetRequestPolicy)policy;
++ (NSString *)requestPolicy:(SSNetRequestPolicy)policy;
 
 @end
 

@@ -100,6 +100,11 @@
   return [[SSNetWorkCachePolocy alloc] init];
 }
 
+- (SSNetRequestPolicy)requestPolicyWithRequestBean:(nonnull in id<SSNetDomainRequestProtocol>)requestBean
+{
+  return SSNetRequestReadCacheWithUpdate;
+}
+
 #pragma mark - <SSNetDomainRequestHelperProtocol>
 
 - (BOOL)statusCodeValidator
@@ -111,9 +116,9 @@
   return (statusCode >= 200 && statusCode <= 299);
 }
 
-- (nullable NSString*)requestUrlMosaic:(in nonnull id)netRequestBean error:(out NSError **)error
+- (nullable NSString*)requestUrlMosaicWithRequestBean:(in SSNetDomainBeanRequest *)requestBean error:(out NSError * _Nullable __autoreleasing *)error
 {
-  id <SSNetDomainRequestProtocol> bean = netRequestBean;
+  id <SSNetDomainRequestProtocol> bean = requestBean;
   
   NSString *requestUrl = [bean requestUrl];
   if (requestUrl == nil) {
@@ -129,7 +134,7 @@
     if (error) {
       *error = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
                                    code:SSNetWorkEngineErrorMethodReturnValueInvalid
-                               userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 地址不能为空！",netRequestBean]}];
+                               userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 地址不能为空！",requestBean]}];
     }
     return nil;
   }
@@ -142,9 +147,10 @@
   return [NSURL URLWithString:requestUrl relativeToURL:url].absoluteString;
 }
 
-- (nonnull id)requestArgumentMosaic:(in nonnull id)netRequestBean error:(out NSError **)error
+- (nonnull id)requestArgumentMosaicWithRequestBean:(in SSNetDomainBeanRequest *)requestBean error:(out NSError * _Nullable __autoreleasing *)error
 {
-  id <SSNetDomainRequestProtocol> bean = netRequestBean;
+  id <SSNetDomainRequestProtocol> bean = requestBean;
+  
   NSDictionary *publicArgument = [bean publicArgument];
   NSDictionary *requestArgument = [bean requestArgument];
   
@@ -153,7 +159,7 @@
     if (error) {
       *error = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
                                    code:SSNetWorkEngineErrorMethodReturnValueInvalid
-                               userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求参数类型错误（不是字典）！",netRequestBean]}];
+                               userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求参数类型错误（不是字典）！",requestBean]}];
     }
   }
   
@@ -164,7 +170,7 @@
   return [fullArgument copy];
 }
 
-- (nonnull id)requestArgumentFilter:(in nonnull id)arguments error:(out NSError **)error
+- (nonnull id)requestArgumentFilterWithArguments:(in id)arguments error:(out NSError * _Nullable __autoreleasing *)error
 {
   return NONNIL_DIC(arguments);
 }

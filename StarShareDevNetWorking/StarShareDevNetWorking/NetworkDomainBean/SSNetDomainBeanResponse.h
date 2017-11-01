@@ -6,12 +6,12 @@
 //  Copyright © 2017年 BUBUKO. All rights reserved.
 //
 
-#import "SSNetDomainBeanParent.h"
+#import <Foundation/Foundation.h>
 #import "SSNetDomainResponseProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SSNetDomainBeanResponse : SSNetDomainBeanParent<SSNetDomainResponseProtocol>
+@interface SSNetDomainBeanResponse : NSObject<SSNetDomainResponseProtocol>
 
 @end
 

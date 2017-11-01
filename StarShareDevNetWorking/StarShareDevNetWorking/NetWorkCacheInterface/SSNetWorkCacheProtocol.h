@@ -13,21 +13,22 @@
 @protocol SSNetDomainRequestProtocol;
 @protocol SSNetDomainResponseProtocol;
 
+@class SSNetWorkCachePolocy;
+@class SSNetDomainBeanRequest;
+@class SSNetDomainBeanResponse;
+
 @protocol SSNetWorkCacheProtocol <NSObject>
 
 - (id<SSNetWorkCacheHandleProtocol>)writeCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                            responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                    error:(out NSError **)error;
 
 - (id<SSNetWorkCacheHandleProtocol>)readCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                            requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                           responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                            requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                   error:(out NSError **)error;
 
 - (id<SSNetWorkCacheHandleProtocol>)clearCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                            responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                    error:(out NSError **)error;
 
 @end

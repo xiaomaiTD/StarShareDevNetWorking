@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class SSNetDomainBeanRequest;
+@class SSNetDomainBeanResponse;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol SSNetDomainRequestHelperProtocol <NSObject>
 
 @required
 - (BOOL)statusCodeValidator;
-- (nullable NSString*)requestUrlMosaic:(in nonnull id)netRequestBean error:(out NSError **)error;
-- (nonnull id)requestArgumentMosaic:(in nonnull id)netRequestBean error:(out NSError **)error;
-- (nonnull id)requestArgumentFilter:(in nonnull id)arguments error:(out NSError **)error;
+- (nullable NSString*)requestUrlMosaicWithRequestBean:(in nonnull SSNetDomainBeanRequest *)requestBean error:(out NSError **)error;
+- (nonnull id)requestArgumentMosaicWithRequestBean:(in nonnull SSNetDomainBeanRequest *)requestBean error:(out NSError **)error;
+- (nonnull id)requestArgumentFilterWithArguments:(in nonnull id)arguments error:(out NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

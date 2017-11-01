@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		310382621FA5D68800F0681B /* SSNetWorkCachePolocy.m in Sources */ = {isa = PBXBuildFile; fileRef = 310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */; };
 		310382651FA5D7AD00F0681B /* SSNetWorkCacheHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 310382641FA5D7AD00F0681B /* SSNetWorkCacheHandle.m */; };
-		3114DC6E1FA37B68001A64B2 /* SSNetDomainBeanParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */; };
 		316EEFC41FA5DAC70014470A /* SSYYNetWorkCacheEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 316EEFC31FA5DAC70014470A /* SSYYNetWorkCacheEngine.m */; };
 		316EEFC71FA5DAD60014470A /* SSYYNetWorkCacheHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 316EEFC61FA5DAD60014470A /* SSYYNetWorkCacheHandle.m */; };
 		317A7FFE1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 317A7FFD1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m */; };
@@ -22,6 +20,7 @@
 		318B24A21FA41FF5005D5C66 /* SSNetWorkEngineHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A11FA41FF5005D5C66 /* SSNetWorkEngineHandle.m */; };
 		318B24A61FA42248005D5C66 /* SSAFNetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A41FA42248005D5C66 /* SSAFNetWorkEngine.m */; };
 		318B24A91FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */; };
+		319C98021FA99702006B64F6 /* SSNetWorkCachePolocy.m in Sources */ = {isa = PBXBuildFile; fileRef = 319C98001FA99702006B64F6 /* SSNetWorkCachePolocy.m */; };
 		31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC821FA2151A009C0389 /* AppDelegate.m */; };
 		31FBDC861FA2151A009C0389 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC851FA2151A009C0389 /* ViewController.m */; };
 		31FBDC891FA2151A009C0389 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31FBDC871FA2151A009C0389 /* Main.storyboard */; };
@@ -56,14 +55,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3103825F1FA5D58000F0681B /* SSNetRequestCachePolocyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestCachePolocyProtocol.h; sourceTree = "<group>"; };
-		310382601FA5D68800F0681B /* SSNetWorkCachePolocy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCachePolocy.h; sourceTree = "<group>"; };
-		310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCachePolocy.m; sourceTree = "<group>"; };
 		310382631FA5D7AD00F0681B /* SSNetWorkCacheHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCacheHandle.h; sourceTree = "<group>"; };
 		310382641FA5D7AD00F0681B /* SSNetWorkCacheHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCacheHandle.m; sourceTree = "<group>"; };
 		3114DC6B1FA37A3E001A64B2 /* SSNetDomainRequestHelperProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainRequestHelperProtocol.h; sourceTree = "<group>"; };
-		3114DC6C1FA37B68001A64B2 /* SSNetDomainBeanParent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainBeanParent.h; sourceTree = "<group>"; };
-		3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSNetDomainBeanParent.m; sourceTree = "<group>"; };
 		3116A6011FA2B20D00AC8C70 /* SSNetRequestHandleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestHandleProtocol.h; sourceTree = "<group>"; };
 		3116A6031FA2B20D00AC8C70 /* SSNetRequestProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestProtocol.h; sourceTree = "<group>"; };
 		3116A6081FA2B2C100AC8C70 /* SSNetDomainRequestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSNetDomainRequestProtocol.h; sourceTree = "<group>"; };
@@ -95,6 +89,9 @@
 		318B24A51FA42248005D5C66 /* SSAFNetWorkEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAFNetWorkEngine.h; sourceTree = "<group>"; };
 		318B24A71FA4227F005D5C66 /* SSAFNetWorkEngineHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAFNetWorkEngineHandle.h; sourceTree = "<group>"; };
 		318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAFNetWorkEngineHandle.m; sourceTree = "<group>"; };
+		319C97FF1FA996D6006B64F6 /* SSNetRequestCachePolocyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestCachePolocyProtocol.h; sourceTree = "<group>"; };
+		319C98001FA99702006B64F6 /* SSNetWorkCachePolocy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCachePolocy.m; sourceTree = "<group>"; };
+		319C98011FA99702006B64F6 /* SSNetWorkCachePolocy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCachePolocy.h; sourceTree = "<group>"; };
 		31FBDC7E1FA2151A009C0389 /* StarShareDevNetWorking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarShareDevNetWorking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FBDC811FA2151A009C0389 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		31FBDC821FA2151A009C0389 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -159,7 +156,6 @@
 			children = (
 				3116A6031FA2B20D00AC8C70 /* SSNetRequestProtocol.h */,
 				3116A6011FA2B20D00AC8C70 /* SSNetRequestHandleProtocol.h */,
-				3103825F1FA5D58000F0681B /* SSNetRequestCachePolocyProtocol.h */,
 			);
 			path = NetworkRequestInterface;
 			sourceTree = "<group>";
@@ -171,6 +167,7 @@
 				3116A6091FA2B2F600AC8C70 /* SSNetDomainResponseProtocol.h */,
 				3114DC6B1FA37A3E001A64B2 /* SSNetDomainRequestHelperProtocol.h */,
 				31FC65241FA3900B003A939E /* SSNetDomainResponseHelperProtocol.h */,
+				319C97FF1FA996D6006B64F6 /* SSNetRequestCachePolocyProtocol.h */,
 			);
 			path = NetworkDomainInterface;
 			sourceTree = "<group>";
@@ -189,12 +186,12 @@
 		317A7FFB1FA2CB9C00C60743 /* NetworkDomainBean */ = {
 			isa = PBXGroup;
 			children = (
-				3114DC6C1FA37B68001A64B2 /* SSNetDomainBeanParent.h */,
-				3114DC6D1FA37B68001A64B2 /* SSNetDomainBeanParent.m */,
 				317A7FFC1FA2CBDE00C60743 /* SSNetDomainBeanRequest.h */,
 				317A7FFD1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m */,
 				317A7FFF1FA2CBEB00C60743 /* SSNetDomainBeanResponse.h */,
 				317A80001FA2CBEB00C60743 /* SSNetDomainBeanResponse.m */,
+				319C98011FA99702006B64F6 /* SSNetWorkCachePolocy.h */,
+				319C98001FA99702006B64F6 /* SSNetWorkCachePolocy.m */,
 			);
 			path = NetworkDomainBean;
 			sourceTree = "<group>";
@@ -341,8 +338,6 @@
 				31FBDCBC1FA2220E009C0389 /* SSNetWorkEngine.m */,
 				318B24A01FA41FF5005D5C66 /* SSNetWorkEngineHandle.h */,
 				318B24A11FA41FF5005D5C66 /* SSNetWorkEngineHandle.m */,
-				310382601FA5D68800F0681B /* SSNetWorkCachePolocy.h */,
-				310382611FA5D68800F0681B /* SSNetWorkCachePolocy.m */,
 			);
 			path = NetWorkEngine;
 			sourceTree = "<group>";
@@ -570,11 +565,10 @@
 				31FBDCBD1FA2220E009C0389 /* SSNetWorkEngine.m in Sources */,
 				317AA6C01FA3347D008EF497 /* StarShareNetEngine.m in Sources */,
 				317AA6B71FA2F495008EF497 /* SSNetworkUtils.m in Sources */,
-				3114DC6E1FA37B68001A64B2 /* SSNetDomainBeanParent.m in Sources */,
 				31FC652A1FA3A20F003A939E /* HomePageResponse.m in Sources */,
 				317A7FFE1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m in Sources */,
+				319C98021FA99702006B64F6 /* SSNetWorkCachePolocy.m in Sources */,
 				31FC65271FA3A1FE003A939E /* HomePageRequest.m in Sources */,
-				310382621FA5D68800F0681B /* SSNetWorkCachePolocy.m in Sources */,
 				31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */,
 				318B24A21FA41FF5005D5C66 /* SSNetWorkEngineHandle.m in Sources */,
 				317A80011FA2CBEB00C60743 /* SSNetDomainBeanResponse.m in Sources */,

@@ -6,13 +6,16 @@
 //  Copyright © 2017年 BUBUKO. All rights reserved.
 //
 
-#import "SSNetDomainBeanParent.h"
+#import <Foundation/Foundation.h>
 #import "SSNetDomainRequestProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SSNetDomainBeanRequest : SSNetDomainBeanParent<SSNetDomainRequestProtocol>
+@interface SSNetDomainBeanRequest : NSObject<SSNetDomainRequestProtocol>
+@property(nonatomic, strong) NSURLResponse *response;
+@property(nonatomic, strong) id responseObject;
 
+@property(nonatomic, assign, getter=isDataFromCache) BOOL dataFromCache;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -16,6 +16,8 @@
 #import "SSNetDomainBeanRequest.h"
 #import "SSNetDomainBeanResponse.h"
 #import "SSNetWorkCacheHandle.h"
+#import "SSNetDomainBeanRequest.h"
+#import "SSNetDomainBeanResponse.h"
 
 @interface StarShareNetEngine ()
 @property (nonatomic, strong) SSNetWorkEngine *netWorkEngine;
@@ -41,8 +43,8 @@
   return singletonInstance;
 }
 
-- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in id)requestBean
-                                           responseBean:(in id)responseBean
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
 {
   return [self excuteWithRequestBean:requestBean
                         responseBean:responseBean
@@ -50,8 +52,8 @@
                               failed:nil];
 }
 
-- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in id)requestBean
-                                           responseBean:(in id)responseBean
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
                                               successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
                                                  failed:(in SSNetEngineRequestBeanFailedBlock)failed
 {
@@ -63,8 +65,8 @@
                                  end:nil];
 }
 
-- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in id)requestBean
-                                           responseBean:(in id)responseBean
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
                                                   begin:(in SSNetEngineRequestBeanBeginBlock)begin
                                               successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
                                                  failed:(in SSNetEngineRequestBeanFailedBlock)failed
@@ -98,21 +100,21 @@
     
     ///< 拼接请求链接
     NSString * requestUrlString = nil;
-    SS_SAFE_SEND_MESSAGE(requestBean, requestUrlMosaic:error:){
-      requestUrlString = [requestBean requestUrlMosaic:requestBean error:&verificationError];
+    SS_SAFE_SEND_MESSAGE(requestBean, requestUrlMosaicWithRequestBean:error:){
+      requestUrlString = [requestBean requestUrlMosaicWithRequestBean:requestBean error:&verificationError];
     };
     if (verificationError) break;
     
     ///< 拼接请求参数
     NSDictionary *fullParams = nil;
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaic:error:){
-      fullParams = [requestBean requestArgumentMosaic:requestBean error:&verificationError];
+    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaicWithRequestBean:error:){
+      fullParams = [requestBean requestArgumentMosaicWithRequestBean:requestBean error:&verificationError];
     };
     if (verificationError) break;
     
     ///< 请求参数过滤
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentFilter:error:){
-      fullParams = [requestBean requestArgumentFilter:fullParams error:&verificationError];
+    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentFilterWithArguments:error:){
+      fullParams = [requestBean requestArgumentFilterWithArguments:fullParams error:&verificationError];
     };
     if (verificationError) break;
     
@@ -184,7 +186,7 @@
       allowsCellularAccess = [requestBean allowsCellularAccess];
     };
     
-    ///< 数据缓存处理
+    ///< 数据缓存策略
     id<SSNetRequestCachePolocyProtocol> cachePolocy = nil;
     SS_SAFE_SEND_MESSAGE(requestBean, cachePolocy){
       cachePolocy = [requestBean cachePolocy];
@@ -193,8 +195,14 @@
     
     ///< 是否支持缓存
     BOOL cacheEnable = NO;
-    SS_SAFE_SEND_MESSAGE(cachePolocy, needCache){
-      cacheEnable = [cachePolocy needCache];
+    SS_SAFE_SEND_MESSAGE(cachePolocy, needCacheWithRequestBean:){
+      cacheEnable = [cachePolocy needCacheWithRequestBean:requestBean];
+    }
+    
+    ///< 缓存数据读取策略
+    SSNetRequestPolicy requestPolicy = SSNetRequestReadCacheWithUpdate;
+    SS_SAFE_SEND_MESSAGE(cachePolocy, requestPolicyWithRequestBean:){
+      requestPolicy = [requestBean requestPolicyWithRequestBean:requestBean];
     }
     
     ///< 读取缓存数据
@@ -204,7 +212,6 @@
       id<SSNetWorkCacheHandleProtocol> cacheHandle =
       [self.cacheEngine readCacheWithPolocy:cachePolocy
                                 requestBean:requestBean
-                               responseBean:responseBean
                                       error:&cacheError];
       if (cacheError) {
         SSNetWorkLog(@"StarShareDevNetWorking -> readCache Error : %@",cacheError.localizedDescription);
@@ -212,33 +219,32 @@
         cacheData = [cacheHandle cacheData];
         SSNetWorkLog(@"StarShareDevNetWorking -> readCache Data %@!",cacheData != nil ? @"Success" : @"Failed");
       }
-      ((SSNetDomainBeanParent*)requestBean).cacheHandle = cacheHandle;
-      ((SSNetDomainBeanParent*)responseBean).cacheHandle = cacheHandle;
     }
     
     ///< 返回缓存数据
     if (cacheData) {
       
-      ((SSNetDomainBeanParent*)requestBean).responseObject = cacheData;
-      ((SSNetDomainBeanParent*)requestBean).dataFromCache = YES;
-      
-      ((SSNetDomainBeanParent*)responseBean).responseObject = cacheData;
-      ((SSNetDomainBeanParent*)responseBean).dataFromCache = YES;
+      requestBean.responseObject = cacheData;
+      requestBean.dataFromCache = YES;
       
       ///< 告诉请求完成，进行模型解析等操作
-      SS_SAFE_SEND_MESSAGE(responseBean, respondBeanComplement:requestBean:isDataFromCache:){
-        [responseBean respondBeanComplement:responseBean requestBean:requestBean isDataFromCache:YES];
+      SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
+        [responseBean complementWithRequestBean:requestBean respondBean:responseBean isDataFromCache:YES];
       }
       
       if (successed) {
         successed(requestBean,responseBean,YES);
       }
-      if (end != NULL) {
-        end();
+      
+      if (requestPolicy == SSNetRequestReadCacheOnly) {
+        if (end != NULL) {
+          end();
+        }
+        return [[SSNetWorkEngineHandleNilObject alloc] init];
       }
     }
     
-    SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nCachePolicy: %@ \nDataFromCache: %@ \n#############################",
+    SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nreadCachePolicy: %@ \nwriteCachePolicy: %@ \nDataFromCache: %@ \n#############################",
                  requestUrlString,
                  [SSNetworkUtils requestMethod:method],
                  fullParams,
@@ -247,22 +253,19 @@
                  @(timeout),
                  BOOL_STRING(allowsCellularAccess),
                  BOOL_STRING(cacheEnable),
-                 [SSNetworkUtils cachePolicy:[cachePolocy cachePolicy]],
+                 [SSNetworkUtils requestPolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
+                 [SSNetworkUtils cachePolicy:[requestBean requestPolicyWithRequestBean:requestBean]],
                  BOOL_STRING(cacheEnable && cacheData != nil));
     
     
-    __block SSNetDomainBeanParent <SSNetDomainRequestProtocol>*domainBeanRequest = requestBean;
-    __block SSNetDomainBeanParent <SSNetDomainResponseProtocol>*domainBeanResponse = responseBean;
+    __block SSNetDomainBeanRequest *domainBeanRequest = requestBean;
+    __block SSNetDomainBeanResponse *domainBeanResponse = responseBean;
     
     SSNetRequestSuccessedCallback requestSuccess = ^(NSURLResponse *response, id responseObject){
       
       domainBeanRequest.response = response;
       domainBeanRequest.responseObject = responseObject;
       domainBeanRequest.dataFromCache = NO;
-      
-      domainBeanResponse.response = response;
-      domainBeanResponse.responseObject = responseObject;
-      domainBeanResponse.dataFromCache = NO;
       
       NSError *validatError = nil;
       
@@ -297,9 +300,9 @@
         }
         
         ///< 校验 respondBean 合法性
-        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondBeanValidity:error:){
+        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondValidityWithRespondObject:error:){
           NSError *validityError = nil;
-          BOOL result = [domainBeanResponse respondBeanValidity:domainBeanResponse error:&validityError];
+          BOOL result = [domainBeanResponse respondValidityWithRespondObject:domainBeanResponse error:&validityError];
           if (!result && validityError) {
             validatError = validityError;
             break;
@@ -315,8 +318,8 @@
         
         ///< 是否支持缓存
         BOOL cacheEnable = NO;
-        SS_SAFE_SEND_MESSAGE(cachePolocy, needCache){
-          cacheEnable = [cachePolocy needCache];
+        SS_SAFE_SEND_MESSAGE(cachePolocy, needCacheWithRequestBean:){
+          cacheEnable = [cachePolocy needCacheWithRequestBean:domainBeanRequest];
         }
         
         if (cacheEnable) {
@@ -324,20 +327,18 @@
           id<SSNetWorkCacheHandleProtocol> cacheHandle =
           [self.cacheEngine writeCacheWithPolocy:cachePolocy
                                      requestBean:domainBeanRequest
-                                    responseBean:domainBeanResponse
                                            error:&cacheError];
           if (cacheError) {
             SSNetWorkLog(@"StarShareDevNetWorking -> writeCache Error : %@",cacheError.localizedDescription);
           }else{
-            SSNetWorkLog(@"StarShareDevNetWorking -> writeCache data %@!",cacheData != nil ? @"Success" : @"Failed");
+            [cacheHandle cacheData];
+            SSNetWorkLog(@"StarShareDevNetWorking -> writeCache data Success!");
           }
-          domainBeanRequest.cacheHandle = cacheHandle;
-          domainBeanResponse.cacheHandle = cacheHandle;
         }
         
         ///< 告诉请求完成，进行模型解析等操作
-        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondBeanComplement:requestBean:isDataFromCache:){
-          [domainBeanResponse respondBeanComplement:domainBeanResponse requestBean:domainBeanRequest isDataFromCache:NO];
+        SS_SAFE_SEND_MESSAGE(domainBeanResponse, complementWithRequestBean:respondBean:isDataFromCache:){
+          [domainBeanResponse complementWithRequestBean:domainBeanRequest respondBean:domainBeanResponse isDataFromCache:NO];
         }
         
         if (successed != NULL) {
@@ -393,10 +394,6 @@
                                                                                       domainBeanRequest.response = response;
                                                                                       domainBeanRequest.responseObject = responseObject;
                                                                                       domainBeanRequest.dataFromCache = NO;
-                                                                                      
-                                                                                      domainBeanResponse.response = response;
-                                                                                      domainBeanResponse.responseObject = responseObject;
-                                                                                      domainBeanResponse.dataFromCache = NO;
                                                                                       
                                                                                       if (failed != NULL) {
                                                                                         if ([NSThread currentThread] != [NSThread mainThread]) {

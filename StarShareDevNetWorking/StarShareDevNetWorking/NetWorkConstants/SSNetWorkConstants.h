@@ -57,10 +57,16 @@ NS_ENUM(NSStringEncoding) {
   SSNetRequestDataTypeFileUrl = 2,
 };
     
+typedef NSUInteger SSNetRequestPolicy;
+NS_ENUM(NSStringEncoding) {
+  SSNetRequestReadCacheOnly = 1,
+  SSNetRequestReadCacheWithUpdate = 2
+};
+    
 typedef NSUInteger SSNetRequestCachePolicy;
 NS_ENUM(NSStringEncoding) {
-  SSNetRequestCachePolicyMemory = 1,
-  SSNetRequestCachePolicyDisk = 2,
+  SSNetRequestCacheMemory = 1,
+  SSNetRequestCacheDisk = 2,
 };
   
 #define SSNetWorkCacheErrorDomain @"com.starshare.caching"

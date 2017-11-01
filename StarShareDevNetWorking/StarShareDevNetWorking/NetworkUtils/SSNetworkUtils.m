@@ -174,14 +174,30 @@ void SSNetWorkLog(NSString *format, ...) {
   }
 }
 
++ (NSString *)requestPolicy:(SSNetRequestPolicy)policy
+{
+  switch (policy) {
+    case SSNetRequestReadCacheOnly:
+      return @"ReadCacheOnly";
+      break;
+    case SSNetRequestReadCacheWithUpdate:
+      return @"ReadCacheWithUpdate";
+      break;
+      
+    default:
+      return @"Nill";
+      break;
+  }
+}
+
 + (NSString *)cachePolicy:(SSNetRequestCachePolicy)policy
 {
   switch (policy) {
-    case SSNetRequestCachePolicyMemory:
-      return @"Memory";
+    case SSNetRequestCacheMemory:
+      return @"WriteCacheMemory";
       break;
-    case SSNetRequestCachePolicyDisk:
-      return @"Disk";
+    case SSNetRequestCacheDisk:
+      return @"WriteCacheDisk";
       break;
       
     default:

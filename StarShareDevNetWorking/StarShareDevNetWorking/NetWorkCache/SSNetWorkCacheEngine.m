@@ -30,35 +30,29 @@
 }
 
 - (id<SSNetWorkCacheHandleProtocol>)writeCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                            responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                    error:(out NSError *__autoreleasing *)error
 {
   return [self.yyCacheEngine writeCacheWithPolocy:polocy
                                       requestBean:requestBean
-                                     responseBean:responseBean
                                             error:error];
 }
 
 - (id<SSNetWorkCacheHandleProtocol>)readCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                            requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                           responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                            requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                   error:(out NSError *__autoreleasing *)error
 {
   return [self.yyCacheEngine readCacheWithPolocy:polocy
                                      requestBean:requestBean
-                                    responseBean:responseBean
                                            error:error];
 }
 
 - (id<SSNetWorkCacheHandleProtocol>)clearCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in id<SSNetDomainRequestProtocol>)requestBean
-                                            responseBean:(in id<SSNetDomainResponseProtocol>)responseBean
+                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
                                                    error:(out NSError *__autoreleasing *)error
 {
   return [self.yyCacheEngine clearCacheWithPolocy:polocy
                                       requestBean:requestBean
-                                     responseBean:responseBean
                                             error:error];
 }
 

@@ -16,7 +16,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:@(self.version) forKey:NSStringFromSelector(@selector(version))];
+  [aCoder encodeObject:self.version forKey:NSStringFromSelector(@selector(version))];
   [aCoder encodeObject:self.sensitiveDataString forKey:NSStringFromSelector(@selector(sensitiveDataString))];
   [aCoder encodeObject:self.creationDate forKey:NSStringFromSelector(@selector(creationDate))];
   [aCoder encodeObject:self.appVersionString forKey:NSStringFromSelector(@selector(appVersionString))];
@@ -28,7 +28,7 @@
     return nil;
   }
   
-  self.version = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(version))] integerValue];
+  self.version = [aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(version))];
   self.sensitiveDataString = [aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(sensitiveDataString))];
   self.creationDate = [aDecoder decodeObjectOfClass:[NSDate class] forKey:NSStringFromSelector(@selector(creationDate))];
   self.appVersionString = [aDecoder decodeObjectOfClass:[NSString class] forKey:NSStringFromSelector(@selector(appVersionString))];

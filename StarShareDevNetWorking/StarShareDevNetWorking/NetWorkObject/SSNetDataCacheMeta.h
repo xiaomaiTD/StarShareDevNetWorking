@@ -10,7 +10,7 @@
 
 @interface SSNetDataCacheMeta : NSObject<NSSecureCoding>
 
-@property (nonatomic, assign) long long version;
+@property (nonatomic, strong) NSString *version;
 @property (nonatomic, strong) NSString *sensitiveDataString;
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic, strong) NSString *appVersionString;

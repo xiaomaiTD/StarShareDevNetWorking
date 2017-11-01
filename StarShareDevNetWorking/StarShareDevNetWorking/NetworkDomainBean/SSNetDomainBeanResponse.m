@@ -13,7 +13,7 @@
 
 #pragma mark - <SSNetDomainResponseProtocol>
 
-- (void)respondBeanComplement:(in id)respondBean requestBean:(in id)requestBean isDataFromCache:(BOOL)isDataFromCache
+- (void)complementWithRequestBean:(in SSNetDomainBeanRequest *)requestBean respondBean:(in SSNetDomainBeanResponse *)respondBean isDataFromCache:(BOOL)isDataFromCache
 {
   
 }
@@ -25,7 +25,7 @@
   return nil;
 }
 
-- (BOOL)respondBeanValidity:(in id)respondBean error:(out NSError **)error
+- (BOOL)respondValidityWithRespondObject:(in id)respondObject error:(out NSError * _Nullable __autoreleasing *)error
 {
   return YES;
 }

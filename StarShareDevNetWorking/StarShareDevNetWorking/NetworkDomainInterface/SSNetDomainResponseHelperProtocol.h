@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 - (nullable id)jsonValidator;
-- (BOOL)respondBeanValidity:(in id)respondBean error:(out NSError **)error;
+- (BOOL)respondValidityWithRespondObject:(in id)respondObject error:(out NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END
