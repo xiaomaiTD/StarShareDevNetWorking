@@ -10,19 +10,5 @@
 
 @implementation HomePageCachePolocy
 
-- (BOOL)needCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
-{
-  return YES;
-}
-
-//- (SSNetRequestPolicy)requestPolicyWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
-//{
-//  return SSNetRequestReadCacheWithUpdate;
-//}
-
-- (SSNetRequestCachePolicy)cachePolicyWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
-{
-  return SSNetRequestCacheDisk;
-}
 
 @end
