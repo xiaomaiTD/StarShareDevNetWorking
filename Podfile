@@ -4,5 +4,6 @@ target 'StarShareDevNetWorking' do
   
 pod 'AFNetworking'
 pod 'YYCache'
+pod 'YYModel'
 
 end

@@ -25,7 +25,6 @@
     _baseUrl = @"";
     _cachePath = @"StarShareRequestCache";
     _debugLogEnabled = YES;
-    _sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     _securityPolicy = nil;
     _publicArgument = nil;
     _publicHeaders = nil;

@@ -9,10 +9,11 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "SSNetworkUtils.h"
 #import "SSNetworkConfig.h"
+#import "StarShareNetEngine.h"
 
 void SSNetWorkLog(NSString *format, ...) {
 #ifdef DEBUG
-  if (![SSNetworkConfig sharedConfig].debugLogEnabled) {
+  if (![StarShareNetEngine sharedInstance].engineConfigation.debugLogEnabled) {
     return;
   }
   va_list argptr;

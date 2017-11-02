@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 /**
- 请求地址链接 default -> [SSNetworkConfig sharedConfig].baseUrl
+ 请求地址链接 default -> [StarShareNetEngine sharedInstance].engineConfigation.baseUrl
 
  @return baseUrl
  */
@@ -105,14 +105,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable SSNetRequestData*)requestData;
 
 /**
- 超时时间 default -> [SSNetworkConfig sharedConfig].timeoutInterval
+ 超时时间 default -> [StarShareNetEngine sharedInstance].engineConfigation.timeoutInterval
 
  @return timeoutInterval
  */
 - (NSTimeInterval)timeoutInterval;
 
 /**
- 是否允许蜂窝数据访问 default -> [SSNetworkConfig sharedConfig].allowsCellularAccess
+ 是否允许蜂窝数据访问 default -> [StarShareNetEngine sharedInstance].engineConfigation.allowsCellularAccess
 
  @return allowsCellularAccess
  */

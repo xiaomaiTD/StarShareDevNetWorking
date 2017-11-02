@@ -11,10 +11,13 @@
 
 @class SSNetDomainBeanRequest;
 @class SSNetDomainBeanResponse;
+@class SSNetworkConfig;
 
 @interface StarShareNetEngine : NSObject
 
+@property (nonatomic, strong, readonly) SSNetworkConfig *engineConfigation;///< default is [SSNetworkConfig sharedConfig]
 + (instancetype)sharedInstance;
++ (void)setupEngineConfigation:(SSNetworkConfig *)configation;
 
 - (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
                                            responseBean:(in SSNetDomainBeanResponse *)responseBean;

@@ -13,7 +13,12 @@
 
 - (NSString *)requestUrl
 {
-  return @"https://www.v2ex.com/api/topics/hot.json";
+  return @"https://www.v2ex.com/api/members/show.json";
+}
+
+- (id)requestArgument
+{
+  return @{@"username":@"rvw"};
 }
 
 - (id<SSNetRequestCachePolocyProtocol>)cachePolocy

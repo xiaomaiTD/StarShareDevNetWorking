@@ -21,6 +21,7 @@
 		318B24A61FA42248005D5C66 /* SSAFNetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A41FA42248005D5C66 /* SSAFNetWorkEngine.m */; };
 		318B24A91FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B24A81FA4227F005D5C66 /* SSAFNetWorkEngineHandle.m */; };
 		319C98021FA99702006B64F6 /* SSNetWorkCachePolocy.m in Sources */ = {isa = PBXBuildFile; fileRef = 319C98001FA99702006B64F6 /* SSNetWorkCachePolocy.m */; };
+		319C98171FA9CE12006B64F6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 319C98161FA9CE12006B64F6 /* User.m */; };
 		31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC821FA2151A009C0389 /* AppDelegate.m */; };
 		31FBDC861FA2151A009C0389 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FBDC851FA2151A009C0389 /* ViewController.m */; };
 		31FBDC891FA2151A009C0389 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31FBDC871FA2151A009C0389 /* Main.storyboard */; };
@@ -92,6 +93,8 @@
 		319C97FF1FA996D6006B64F6 /* SSNetRequestCachePolocyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetRequestCachePolocyProtocol.h; sourceTree = "<group>"; };
 		319C98001FA99702006B64F6 /* SSNetWorkCachePolocy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSNetWorkCachePolocy.m; sourceTree = "<group>"; };
 		319C98011FA99702006B64F6 /* SSNetWorkCachePolocy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSNetWorkCachePolocy.h; sourceTree = "<group>"; };
+		319C98151FA9CE12006B64F6 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		319C98161FA9CE12006B64F6 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		31FBDC7E1FA2151A009C0389 /* StarShareDevNetWorking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarShareDevNetWorking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31FBDC811FA2151A009C0389 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		31FBDC821FA2151A009C0389 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				31FC65291FA3A20F003A939E /* HomePageResponse.m */,
 				31FC652B1FA3A605003A939E /* HomePageCachePolocy.h */,
 				31FC652C1FA3A605003A939E /* HomePageCachePolocy.m */,
+				319C98151FA9CE12006B64F6 /* User.h */,
+				319C98161FA9CE12006B64F6 /* User.m */,
 			);
 			path = StarShareDevNetWorking;
 			sourceTree = "<group>";
@@ -569,6 +574,7 @@
 				317A7FFE1FA2CBDE00C60743 /* SSNetDomainBeanRequest.m in Sources */,
 				319C98021FA99702006B64F6 /* SSNetWorkCachePolocy.m in Sources */,
 				31FC65271FA3A1FE003A939E /* HomePageRequest.m in Sources */,
+				319C98171FA9CE12006B64F6 /* User.m in Sources */,
 				31FBDC831FA2151A009C0389 /* AppDelegate.m in Sources */,
 				318B24A21FA41FF5005D5C66 /* SSNetWorkEngineHandle.m in Sources */,
 				317A80011FA2CBEB00C60743 /* SSNetDomainBeanResponse.m in Sources */,

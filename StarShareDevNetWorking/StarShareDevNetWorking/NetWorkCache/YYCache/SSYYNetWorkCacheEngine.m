@@ -17,6 +17,7 @@
 #import "SSNetDataCacheMeta.h"
 #import "SSYYNetWorkCacheHandle.h"
 #import "SSNetDomainBeanRequest.h"
+#import "StarShareNetEngine.h"
 
 @implementation SSYYNetWorkCacheEngine
 
@@ -374,10 +375,11 @@
 #pragma mark - cache path
 
 - (NSString *)cachePath {
-  if ([SSNetworkConfig sharedConfig].cachePath == nil || [SSNetworkConfig sharedConfig].cachePath.length == 0) {
-    [SSNetworkConfig sharedConfig].cachePath = @"StarShareRequestCache";
+  if ([StarShareNetEngine sharedInstance].engineConfigation.cachePath == nil ||
+      [StarShareNetEngine sharedInstance].engineConfigation.cachePath.length == 0) {
+    [StarShareNetEngine sharedInstance].engineConfigation.cachePath = @"StarShareRequestCache";
   }
-  return [SSNetworkUtils md5StringFromString:[SSNetworkConfig sharedConfig].cachePath];
+  return [SSNetworkUtils md5StringFromString:[StarShareNetEngine sharedInstance].engineConfigation.cachePath];
 }
 
 @end

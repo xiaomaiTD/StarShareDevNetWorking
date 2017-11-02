@@ -22,6 +22,7 @@
 @interface StarShareNetEngine ()
 @property (nonatomic, strong) SSNetWorkEngine *netWorkEngine;
 @property (nonatomic, strong) SSNetWorkCacheEngine *cacheEngine;
+@property (nonatomic, strong, readwrite) SSNetworkConfig *engineConfigation;
 @end
 
 @implementation StarShareNetEngine
@@ -31,6 +32,7 @@
   if (self = [super init]) {
     self.netWorkEngine = SSNetWorkEngine.alloc.init;
     self.cacheEngine = SSNetWorkCacheEngine.alloc.init;
+    self.engineConfigation = [SSNetworkConfig sharedConfig];
   }
   
   return self;
@@ -41,6 +43,18 @@
   static dispatch_once_t pred;
   dispatch_once(&pred, ^{singletonInstance = [[self alloc] init];});
   return singletonInstance;
+}
+
++ (void)setupEngineConfigation:(SSNetworkConfig *)configation
+{
+  if (configation) {
+    [StarShareNetEngine sharedInstance].engineConfigation = configation;;
+  }
+}
+
+- (SSNetworkConfig *)engineConfigation
+{
+  return self.engineConfigation;
 }
 
 - (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
@@ -177,7 +191,7 @@
     SS_SAFE_SEND_MESSAGE(requestBean, timeoutInterval){
       timeout = [requestBean timeoutInterval];
     };
-    if(timeout <= 0) timeout = [SSNetworkConfig sharedConfig].timeoutInterval;
+    if(timeout <= 0) timeout = self.engineConfigation.timeoutInterval;
     if(timeout <= 0) timeout = 60;
     
     ///< 是否允许使用蜂窝数据

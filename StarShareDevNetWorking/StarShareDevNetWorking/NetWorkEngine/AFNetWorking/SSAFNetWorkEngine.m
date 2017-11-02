@@ -27,7 +27,7 @@
 
 - (instancetype)init {
   if ((self = [super init])) {
-    NSURLSessionConfiguration *configuration = [SSNetworkConfig sharedConfig].sessionConfiguration;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
     
     _processingQueue = dispatch_queue_create("com.starshare.networkengine.processing", DISPATCH_QUEUE_CONCURRENT);

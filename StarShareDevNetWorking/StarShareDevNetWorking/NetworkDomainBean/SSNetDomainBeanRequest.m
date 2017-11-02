@@ -10,6 +10,7 @@
 #import "SSNetWorkCachePolocy.h"
 #import "SSNetworkConfig.h"
 #import "SSNetWorkConstants.h"
+#import "StarShareNetEngine.h"
 
 @implementation SSNetDomainBeanRequest
 
@@ -17,7 +18,7 @@
 
 - (nonnull NSString *)baseUrl
 {
-  return NONNIL_STRING([SSNetworkConfig sharedConfig].baseUrl);
+  return NONNIL_STRING([StarShareNetEngine sharedInstance].engineConfigation.baseUrl);
 }
 
 - (nullable NSString *)requestUrl
@@ -27,7 +28,7 @@
 
 - (nullable id)securityPolicy
 {
-  return [SSNetworkConfig sharedConfig].securityPolicy;
+  return [StarShareNetEngine sharedInstance].engineConfigation.securityPolicy;
 }
 
 - (SSNetRequestMethod)requestMethod
@@ -62,7 +63,7 @@
 
 - (nullable NSDictionary<NSString *, NSString *> *)publicHeaders
 {
-  return [SSNetworkConfig sharedConfig].publicHeaders;
+  return [StarShareNetEngine sharedInstance].engineConfigation.publicHeaders;
 }
 
 - (nullable id)requestArgument
@@ -72,7 +73,7 @@
 
 - (nullable id)publicArgument
 {
-  return [SSNetworkConfig sharedConfig].publicArgument;
+  return [StarShareNetEngine sharedInstance].engineConfigation.publicArgument;
 }
 
 - (nullable id)cacheFileNameFilterForRequestArgument:(id)argument
@@ -87,12 +88,12 @@
 
 - (NSTimeInterval)timeoutInterval
 {
-  return [SSNetworkConfig sharedConfig].timeoutInterval;
+  return [StarShareNetEngine sharedInstance].engineConfigation.timeoutInterval;
 }
 
 - (BOOL)allowsCellularAccess
 {
-  return [SSNetworkConfig sharedConfig].allowsCellularAccess;
+  return [StarShareNetEngine sharedInstance].engineConfigation.allowsCellularAccess;
 }
 
 - (id<SSNetRequestCachePolocyProtocol>)cachePolocy
