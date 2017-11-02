@@ -6,6 +6,7 @@
 //  Copyright © 2017年 BUBUKO. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "StarShareNetEngine.h"
 #import "SSNetWorkEngine.h"
 #import "SSNetWorkEngineHandle.h"
@@ -19,10 +20,26 @@
 #import "SSNetDomainBeanRequest.h"
 #import "SSNetDomainBeanResponse.h"
 
+@interface SSNetDomainBeanRequest (Private_Status)
+@property (nonatomic, assign) BOOL isExecuting;
+@end
+static char *ExecutingKey = "ExecutingKey";
+@implementation SSNetDomainBeanRequest (Private_Status)
+- (void)setIsExecuting:(BOOL)isExecuting
+{
+  objc_setAssociatedObject(self, ExecutingKey, @(isExecuting), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+- (BOOL)isExecuting
+{
+  id obj = objc_getAssociatedObject(self, ExecutingKey);
+  return obj ? [obj boolValue] : NO;
+}
+@end
+
 @interface StarShareNetEngine ()
 @property (nonatomic, strong) SSNetWorkEngine *netWorkEngine;
 @property (nonatomic, strong) SSNetWorkCacheEngine *cacheEngine;
-@property (nonatomic, strong, readwrite) SSNetworkConfig *engineConfigation;
+@property (nonatomic, strong) SSNetworkConfig *private_engineConfigation;
 @end
 
 @implementation StarShareNetEngine
@@ -32,7 +49,7 @@
   if (self = [super init]) {
     self.netWorkEngine = SSNetWorkEngine.alloc.init;
     self.cacheEngine = SSNetWorkCacheEngine.alloc.init;
-    self.engineConfigation = [SSNetworkConfig sharedConfig];
+    self.private_engineConfigation = [SSNetworkConfig sharedConfig];
   }
   
   return self;
@@ -48,13 +65,13 @@
 + (void)setupEngineConfigation:(SSNetworkConfig *)configation
 {
   if (configation) {
-    [StarShareNetEngine sharedInstance].engineConfigation = configation;;
+    [StarShareNetEngine sharedInstance].private_engineConfigation = configation;;
   }
 }
 
 - (SSNetworkConfig *)engineConfigation
 {
-  return self.engineConfigation;
+  return self.private_engineConfigation;
 }
 
 - (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
@@ -110,6 +127,11 @@
                                               code:SSNetWorkEngineErrorIllegalArgument
                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求对象不合法！",requestBean]}];
       break;
+    }
+    
+    if (requestBean.isExecuting) {
+      SSNetWorkLog(@"%@ -> is Executing!",requestBean);
+      return [[SSNetWorkEngineHandleNilObject alloc] init];
     }
     
     ///< 拼接请求链接
@@ -280,6 +302,7 @@
       domainBeanRequest.response = response;
       domainBeanRequest.responseObject = responseObject;
       domainBeanRequest.dataFromCache = NO;
+      domainBeanRequest.isExecuting = NO;
       
       NSError *validatError = nil;
       
@@ -390,6 +413,7 @@
     };
     
     ///< 请求句柄
+    requestBean.isExecuting = YES;
     id<SSNetRequestHandleProtocol> requestHandle = [self.netWorkEngine requestWithUrlString:requestUrlString
                                                                              securityPolicy:securityPolicy
                                                                                      method:method
@@ -408,6 +432,7 @@
                                                                                       domainBeanRequest.response = response;
                                                                                       domainBeanRequest.responseObject = responseObject;
                                                                                       domainBeanRequest.dataFromCache = NO;
+                                                                                      domainBeanRequest.isExecuting = NO;
                                                                                       
                                                                                       if (failed != NULL) {
                                                                                         if ([NSThread currentThread] != [NSThread mainThread]) {
