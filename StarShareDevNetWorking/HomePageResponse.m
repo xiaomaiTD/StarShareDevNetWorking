@@ -17,4 +17,9 @@
   User *u = [User yy_modelWithJSON:respondBean.responseObject];
 }
 
+- (id)jsonValidator
+{
+  return @{@"status":@(1)};
+}
+
 @end

@@ -13,17 +13,22 @@
 
 - (NSString *)requestUrl
 {
-  return @"https://www.v2ex.com/api/members/show.json";
+  return @"http://47.95.226.243:9090/api/app/getcode";
 }
 
 - (id)requestArgument
 {
-  return @{@"username":@"rvw"};
+  return @{@"phone":@"17744437544"};
 }
 
 - (id<SSNetRequestCachePolocyProtocol>)cachePolocy
 {
   return [[HomePageCachePolocy alloc] init];
+}
+
+- (SSNetRequestMethod)requestMethod
+{
+  return SSNetRequestMethodPOST;
 }
 
 @end

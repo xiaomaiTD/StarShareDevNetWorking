@@ -43,8 +43,11 @@ void SSNetWorkLog(NSString *format, ...) {
           break;
         }
       } else {
+        NSString *valueStr = [NSString stringWithFormat:@"%@",value];
+        NSString *formatStr = [NSString stringWithFormat:@"%@",value];
         if ([value isKindOfClass:format] == NO &&
-            [value isKindOfClass:[NSNull class]] == NO) {
+            [value isKindOfClass:[NSNull class]] == NO &&
+            [valueStr isEqualToString:formatStr] == NO) {
           result = NO;
           break;
         }
