@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SSNetDomainResponseHelperProtocol <NSObject>
 
 @required
-- (nullable id)jsonValidator;
+- (nullable id)jsonStrucValidator;
+- (nullable id)jsonStrucAndValueValidator;
 @end
 
 NS_ASSUME_NONNULL_END

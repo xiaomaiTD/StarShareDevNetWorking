@@ -25,7 +25,17 @@ void SSNetWorkLog(NSString *format, ...) {
 
 @implementation SSNetworkUtils
 
-+ (BOOL)validateJSON:(id)json withValidator:(id)jsonValidator {
++ (BOOL)validateJSONStruc:(id)json withValidator:(id)jsonValidator
+{
+  return [self validateJSON:json withValidator:jsonValidator checkValue:NO];
+}
+
++ (BOOL)validateJSONValue:(id)json withValidator:(id)jsonValidator
+{
+  return [self validateJSON:json withValidator:jsonValidator checkValue:YES];
+}
+
++ (BOOL)validateJSON:(id)json withValidator:(id)jsonValidator checkValue:(BOOL)checkValue {
   if ([json isKindOfClass:[NSDictionary class]] &&
       [jsonValidator isKindOfClass:[NSDictionary class]]) {
     NSDictionary * dict = json;
@@ -38,18 +48,48 @@ void SSNetWorkLog(NSString *format, ...) {
       id format = validator[key];
       if ([value isKindOfClass:[NSDictionary class]]
           || [value isKindOfClass:[NSArray class]]) {
-        result = [self validateJSON:value withValidator:format];
+        result = [self validateJSON:value withValidator:format checkValue:checkValue];
         if (!result) {
           break;
         }
       } else {
-        NSString *valueStr = [NSString stringWithFormat:@"%@",value];
-        NSString *formatStr = [NSString stringWithFormat:@"%@",value];
-        if ([value isKindOfClass:format] == NO &&
-            [value isKindOfClass:[NSNull class]] == NO &&
-            [valueStr isEqualToString:formatStr] == NO) {
-          result = NO;
-          break;
+        
+        NSString *valueType =NSStringFromClass([value class]);
+        NSString *formatType =NSStringFromClass([format class]);
+        
+        BOOL isSameClass = NO;
+        BOOL isString = NO;
+        BOOL isNumber = NO;
+        if ([valueType hasSuffix:@"String"] && [formatType hasSuffix:@"String"]) {
+          isSameClass = YES;
+          isString = YES;
+        }else if ([valueType hasSuffix:@"Number"] && [formatType hasSuffix:@"Number"]){
+          isSameClass = YES;
+          isNumber = YES;
+        }
+        
+        if (checkValue) {
+          if (isSameClass == NO && [value isKindOfClass:[NSNull class]] == NO) {
+            result = NO;
+            break;
+          }else{
+            BOOL valueCheckResult = NO;
+            if (isNumber) {
+              valueCheckResult = [value isEqualToNumber:format];
+            }
+            if (isString) {
+              valueCheckResult = [value isEqualToString:format];
+            }
+            if (valueCheckResult == NO) {
+              result = NO;
+              break;
+            }
+          }
+        }else{
+          if (isSameClass && [value isKindOfClass:[NSNull class]] == NO) {
+            result = NO;
+            break;
+          }
         }
       }
     }
@@ -61,7 +101,7 @@ void SSNetWorkLog(NSString *format, ...) {
       NSArray * array = json;
       NSDictionary * validator = jsonValidator[0];
       for (id item in array) {
-        BOOL result = [self validateJSON:item withValidator:validator];
+        BOOL result = [self validateJSON:item withValidator:validator checkValue:checkValue];
         if (!result) {
           return NO;
         }

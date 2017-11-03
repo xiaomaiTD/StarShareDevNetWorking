@@ -28,7 +28,8 @@
     _securityPolicy = nil;
     _publicArgument = nil;
     _publicHeaders = nil;
-    _statusCodeValidator = nil;
+    _jsonStrucValidator = nil;
+    _jsonStrucAndValueValidator = nil;
     _timeoutInterval = 60;
     _allowsCellularAccess = YES;
   }

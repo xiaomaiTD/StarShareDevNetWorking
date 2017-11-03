@@ -24,10 +24,10 @@
   [[StarShareNetEngine sharedInstance] excuteWithRequestBean:HomePageRequest.alloc.init
                                                 responseBean:HomePageResponse.alloc.init
                                                    successed:^(id requestDomainBean, id respondDomainBean,BOOL dataFromCache) {
-                                                     NSLog(@"");
+                                                     NSLog(@"success");
                                                    }
                                                       failed:^(id requestDomainBean, id respondDomainBean, NSError *error) {
-                                                        NSLog(@"");
+                                                        NSLog(@"error");
                                                       }];
 }
 

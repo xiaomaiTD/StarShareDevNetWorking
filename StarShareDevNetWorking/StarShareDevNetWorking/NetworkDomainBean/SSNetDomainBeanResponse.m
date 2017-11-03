@@ -8,6 +8,8 @@
 
 #import "SSNetDomainBeanResponse.h"
 #import "SSNetWorkCachePolocy.h"
+#import "StarShareNetEngine.h"
+#import "SSNetworkConfig.h"
 
 @implementation SSNetDomainBeanResponse
 
@@ -20,9 +22,14 @@
 
 #pragma mark - <SSNetDomainResponseHelperProtocol>
 
-- (nullable id)jsonValidator
+- (nullable id)jsonStrucValidator
 {
-  return nil;
+  return [StarShareNetEngine sharedInstance].engineConfigation.jsonStrucValidator;
+}
+
+- (nullable id)jsonStrucAndValueValidator
+{
+  return [StarShareNetEngine sharedInstance].engineConfigation.jsonStrucAndValueValidator;
 }
 
 @end

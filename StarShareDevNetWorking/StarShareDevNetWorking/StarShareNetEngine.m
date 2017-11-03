@@ -321,16 +321,28 @@ static char *ExecutingKey = "ExecutingKey";
         
         ///< 校验响应数据 json 合法性
         id json = responseObject;
-        id validator = nil;
-        SS_SAFE_SEND_MESSAGE(domainBeanResponse, jsonValidator){
-          validator = [domainBeanResponse jsonValidator];
+        id strusValidator = nil;
+        id strusAndValueValidator = nil;
+        SS_SAFE_SEND_MESSAGE(domainBeanResponse, jsonStrucValidator){
+          strusValidator = [domainBeanResponse jsonStrucValidator];
         };
-        if (json && validator) {
-          BOOL result = [SSNetworkUtils validateJSON:json withValidator:validator];
+        SS_SAFE_SEND_MESSAGE(domainBeanResponse, jsonStrucAndValueValidator){
+          strusAndValueValidator = [domainBeanResponse jsonStrucAndValueValidator];
+        };
+        if (json && strusAndValueValidator) {
+          BOOL result = [SSNetworkUtils validateJSONValue:json withValidator:strusAndValueValidator];
           if (!result) {
             validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
                                                code:SSNetWorkEngineErrorNetResponseBeanInvalid
-                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ JSON 校验失败！",requestBean]}];
+                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ JSON 结构和值校验失败！",requestBean]}];
+            break;
+          }
+        }else if (json && strusValidator){
+          BOOL result = [SSNetworkUtils validateJSONStruc:json withValidator:strusValidator];
+          if (!result) {
+            validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
+                                               code:SSNetWorkEngineErrorNetResponseBeanInvalid
+                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ JSON 结构校验失败！",requestBean]}];
             break;
           }
         }
