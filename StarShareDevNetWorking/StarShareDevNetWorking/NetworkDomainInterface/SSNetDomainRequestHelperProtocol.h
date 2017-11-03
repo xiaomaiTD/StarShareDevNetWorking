@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SSNetDomainRequestHelperProtocol <NSObject>
 
 @required
-- (BOOL)statusCodeValidator;
+- (BOOL)statusCodeValidator:(NSURLResponse *)response;
 - (nullable NSString*)requestUrlMosaicWithRequestBean:(in nonnull SSNetDomainBeanRequest *)requestBean error:(out NSError **)error;
 - (nonnull id)requestArgumentMosaicWithRequestBean:(in nonnull SSNetDomainBeanRequest *)requestBean error:(out NSError **)error;
-- (nonnull id)requestArgumentFilterWithArguments:(in nonnull id)arguments error:(out NSError **)error;
+- (nonnull id)requestArgumentMapWithArguments:(in nonnull id)arguments error:(out NSError **)error;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -20,12 +20,12 @@
 
 - (SSNetRequestCachePolicy)cachePolicyWithRequestBean:(nonnull in id<SSNetDomainRequestProtocol>)requestBean
 {
-  return SSNetRequestCacheMemory;
+  return -1;
 }
 
-- (NSInteger)cacheEffectiveTimeInSeconds
+- (NSString * _Nonnull)cacheIdentificationWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean
 {
-  return NSIntegerMax;
+  return @"";
 }
 
 - (NSString * _Nonnull)cacheVersion
@@ -33,9 +33,9 @@
   return @"0.0.1";
 }
 
-- (nullable id)cacheSensitiveData
+- (NSInteger)cacheEffectiveTimeInSeconds
 {
-  return nil;
+  return NSIntegerMax;
 }
 
 - (BOOL)writeCacheAsynchronously
@@ -43,18 +43,8 @@
   return YES;
 }
 
-- (BOOL)shouldHoldCacheEventWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+- (BOOL)holdCacheWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean
 {
   return NO;
-}
-
-- (BOOL)canCacheEventWithRequestBean:(nonnull in id<SSNetDomainRequestProtocol>)requestBean
-{
-  return NO;
-}
-
-- (nonnull id)cacheObjectFilter:(nonnull in id)object
-{
-  return object;
 }
 @end

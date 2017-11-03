@@ -108,12 +108,12 @@
 
 #pragma mark - <SSNetDomainRequestHelperProtocol>
 
-- (BOOL)statusCodeValidator
+- (BOOL)statusCodeValidator:(NSURLResponse *)response
 {
-  if (self.response == nil) {
+  if (response == nil) {
     return NO;
   }
-  NSInteger statusCode = ((NSHTTPURLResponse *)self.response).statusCode;
+  NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
   return (statusCode >= 200 && statusCode <= 299);
 }
 
@@ -171,7 +171,7 @@
   return [fullArgument copy];
 }
 
-- (nonnull id)requestArgumentFilterWithArguments:(in id)arguments error:(out NSError * _Nullable __autoreleasing *)error
+- (nonnull id)requestArgumentMapWithArguments:(in id)arguments error:(out NSError * _Nullable __autoreleasing *)error
 {
   return NONNIL_DIC(arguments);
 }

@@ -14,7 +14,7 @@
 
 - (void)complementWithRequestBean:(in SSNetDomainBeanRequest *)requestBean respondBean:(in SSNetDomainBeanResponse *)respondBean isDataFromCache:(BOOL)isDataFromCache
 {
-  User *u = [User yy_modelWithJSON:requestBean.responseObject];
+  User *u = [User yy_modelWithJSON:respondBean.responseObject];
 }
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) id securityPolicy;
 @property (nonatomic, strong) NSDictionary *publicArgument;
 @property (nonatomic, strong) NSDictionary *publicHeaders;
+@property (nonatomic, strong) NSDictionary *statusCodeValidator;
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) BOOL allowsCellularAccess;
 @end

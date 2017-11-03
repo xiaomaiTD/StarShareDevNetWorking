@@ -19,16 +19,14 @@
 
 @protocol SSNetWorkCacheProtocol <NSObject>
 
-- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError **)error;
+- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                               responseObject:(in id)responseObject
+                                                        error:(out NSError **)error;
 
-- (id<SSNetWorkCacheHandleProtocol>)readCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                            requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                  error:(out NSError **)error;
+- (id<SSNetWorkCacheHandleProtocol>)readCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                       error:(out NSError **)error;
 
-- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError **)error;
+- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                        error:(out NSError **)error;
 
 @end

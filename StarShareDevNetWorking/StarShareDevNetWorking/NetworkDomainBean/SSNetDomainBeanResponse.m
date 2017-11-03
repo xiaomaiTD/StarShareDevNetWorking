@@ -25,9 +25,4 @@
   return nil;
 }
 
-- (BOOL)respondValidityWithRespondObject:(in id)respondObject error:(out NSError * _Nullable __autoreleasing *)error
-{
-  return YES;
-}
-
 @end

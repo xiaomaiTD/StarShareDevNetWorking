@@ -17,13 +17,11 @@
 @required
 - (BOOL)needCacheWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
 - (SSNetRequestCachePolicy)cachePolicyWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
-- (NSInteger)cacheEffectiveTimeInSeconds;
+- (NSString * _Nonnull)cacheIdentificationWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
 - (NSString * _Nonnull)cacheVersion;
-- (nullable id)cacheSensitiveData;
+- (NSInteger)cacheEffectiveTimeInSeconds;
 - (BOOL)writeCacheAsynchronously;
 
 @optional
-- (BOOL)shouldHoldCacheEventWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
-- (BOOL)canCacheEventWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
-- (nonnull id)cacheObjectFilter:(nonnull in id)object;
+- (BOOL)holdCacheWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean;
 @end

@@ -141,16 +141,16 @@ static char *ExecutingKey = "ExecutingKey";
     };
     if (verificationError) break;
     
-    ///< 拼接请求参数
     NSDictionary *fullParams = nil;
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaicWithRequestBean:error:){
-      fullParams = [requestBean requestArgumentMosaicWithRequestBean:requestBean error:&verificationError];
+    ///< 请求参数过滤
+    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMapWithArguments:error:){
+      fullParams = [requestBean requestArgumentMapWithArguments:fullParams error:&verificationError];
     };
     if (verificationError) break;
     
-    ///< 请求参数过滤
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentFilterWithArguments:error:){
-      fullParams = [requestBean requestArgumentFilterWithArguments:fullParams error:&verificationError];
+    ///< 拼接请求参数
+    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaicWithRequestBean:error:){
+      fullParams = [requestBean requestArgumentMosaicWithRequestBean:requestBean error:&verificationError];
     };
     if (verificationError) break;
     
@@ -246,9 +246,8 @@ static char *ExecutingKey = "ExecutingKey";
     if (cacheEnable) {
       NSError *cacheError;
       id<SSNetWorkCacheHandleProtocol> cacheHandle =
-      [self.cacheEngine readCacheWithPolocy:cachePolocy
-                                requestBean:requestBean
-                                      error:&cacheError];
+      [self.cacheEngine readCacheWithRequestBean:requestBean
+                                           error:&cacheError];
       if (cacheError) {
         SSNetWorkLog(@"StarShareDevNetWorking -> readCache Error : %@",cacheError.localizedDescription);
       }else{
@@ -260,8 +259,8 @@ static char *ExecutingKey = "ExecutingKey";
     ///< 返回缓存数据
     if (cacheData) {
       
-      requestBean.responseObject = cacheData;
-      requestBean.dataFromCache = YES;
+      responseBean.responseObject = cacheData;
+      responseBean.dataFromCache = YES;
       
       ///< 告诉请求完成，进行模型解析等操作
       SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
@@ -272,12 +271,6 @@ static char *ExecutingKey = "ExecutingKey";
         successed(requestBean,responseBean,YES);
       }
       
-      if (requestPolicy == SSNetRequestReadCacheOnly) {
-        if (end != NULL) {
-          end();
-        }
-        return [[SSNetWorkEngineHandleNilObject alloc] init];
-      }
     }
     
     SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nreadCachePolicy: %@ \nwriteCachePolicy: %@ \nDataFromCache: %@ \n#############################",
@@ -293,25 +286,31 @@ static char *ExecutingKey = "ExecutingKey";
                  [SSNetworkUtils cachePolicy:[requestBean requestPolicyWithRequestBean:requestBean]],
                  BOOL_STRING(cacheEnable && cacheData != nil));
     
+    if (requestPolicy == SSNetRequestReadCacheOnly && cacheData) {
+      if (end != NULL) {
+        end();
+      }
+      return [[SSNetWorkEngineHandleNilObject alloc] init];
+    }
     
     __block SSNetDomainBeanRequest *domainBeanRequest = requestBean;
     __block SSNetDomainBeanResponse *domainBeanResponse = responseBean;
     
     SSNetRequestSuccessedCallback requestSuccess = ^(NSURLResponse *response, id responseObject){
       
-      domainBeanRequest.response = response;
-      domainBeanRequest.responseObject = responseObject;
-      domainBeanRequest.dataFromCache = NO;
+      domainBeanResponse.response = response;
+      domainBeanResponse.responseObject = responseObject;
+      domainBeanResponse.dataFromCache = NO;
       domainBeanRequest.isExecuting = NO;
       
       NSError *validatError = nil;
       
       do {
         
-        ///< 网络状态吗校验
+        ///< 网络请求状态码校验
         BOOL statusCodeValidator = NO;
-        SS_SAFE_SEND_MESSAGE(domainBeanRequest, statusCodeValidator){
-          statusCodeValidator = [domainBeanRequest statusCodeValidator];
+        SS_SAFE_SEND_MESSAGE(domainBeanRequest, statusCodeValidator:){
+          statusCodeValidator = [domainBeanRequest statusCodeValidator:response];
         }
         if (!statusCodeValidator) {
           validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
@@ -336,16 +335,6 @@ static char *ExecutingKey = "ExecutingKey";
           }
         }
         
-        ///< 校验 respondBean 合法性
-        SS_SAFE_SEND_MESSAGE(domainBeanResponse, respondValidityWithRespondObject:error:){
-          NSError *validityError = nil;
-          BOOL result = [domainBeanResponse respondValidityWithRespondObject:domainBeanResponse error:&validityError];
-          if (!result && validityError) {
-            validatError = validityError;
-            break;
-          }
-        };
-        
         ///< 数据缓存处理
         id<SSNetRequestCachePolocyProtocol> cachePolocy = nil;
         SS_SAFE_SEND_MESSAGE(domainBeanRequest, cachePolocy){
@@ -362,9 +351,9 @@ static char *ExecutingKey = "ExecutingKey";
         if (cacheEnable) {
           NSError *cacheError;
           id<SSNetWorkCacheHandleProtocol> cacheHandle =
-          [self.cacheEngine writeCacheWithPolocy:cachePolocy
-                                     requestBean:domainBeanRequest
-                                           error:&cacheError];
+          [self.cacheEngine writeCacheWithRequestBean:domainBeanRequest
+                                       responseObject:domainBeanResponse.responseObject
+                                                error:&cacheError];
           if (cacheError) {
             SSNetWorkLog(@"StarShareDevNetWorking -> writeCache Error : %@",cacheError.localizedDescription);
           }else{
@@ -429,9 +418,9 @@ static char *ExecutingKey = "ExecutingKey";
                                                                                     success:requestSuccess
                                                                                     failure:^(NSURLResponse *response, id responseObject, NSError *error) {
                                                                                       
-                                                                                      domainBeanRequest.response = response;
-                                                                                      domainBeanRequest.responseObject = responseObject;
-                                                                                      domainBeanRequest.dataFromCache = NO;
+                                                                                      domainBeanResponse.response = response;
+                                                                                      domainBeanResponse.responseObject = responseObject;
+                                                                                      domainBeanResponse.dataFromCache = NO;
                                                                                       domainBeanRequest.isExecuting = NO;
                                                                                       
                                                                                       if (failed != NULL) {

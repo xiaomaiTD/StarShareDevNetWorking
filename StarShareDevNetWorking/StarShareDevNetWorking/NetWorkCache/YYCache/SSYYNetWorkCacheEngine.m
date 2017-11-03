@@ -21,11 +21,25 @@
 
 @implementation SSYYNetWorkCacheEngine
 
-- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError **)error
+- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                               responseObject:(in id)responseObject
+                                                        error:(out NSError **)error
 {
   do {
+    
+    ///< 缓存策略
+    id<SSNetRequestCachePolocyProtocol>polocy;
+    SS_SAFE_SEND_MESSAGE(requestBean, cachePolocy){
+      polocy = [requestBean cachePolocy];
+    }
+    if (!polocy) {
+      if (error) {
+        *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                 userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缺失缓存策略！",requestBean]}];
+      }
+      break;
+    }
     
     ///< 接口数据是否需要缓存
     BOOL cacheEnable = NO;
@@ -53,7 +67,7 @@
       cachePolicy = [polocy cachePolicyWithRequestBean:requestBean];
     }
     
-    ///< 缓存存储方式是否有效
+    ///< 缓存存储方式是否合法
     if (cachePolicy != SSNetRequestCacheMemory && cachePolicy != SSNetRequestCacheDisk){
       if (error) {
         *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
@@ -63,14 +77,24 @@
       break;
     }
     
-    NSString *const cacheName = [self cacheName:requestBean];
-    NSString *const cacheMetaName = [self cacheMetaName:requestBean];
+    ///< 缓存标识符
+    NSString *const cacheName = [polocy cacheIdentificationWithRequestBean:requestBean];
+    if (cacheName == nil) {
+      if (error) {
+        *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                 userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
+      }
+      break;
+    }
+    NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
+    
     YYCache *cache = [YYCache cacheWithName:[self cachePath]];
     
     if (cacheEffectiveTime > 0) {
       
       ///< 是否有有效数据
-      if (requestBean.responseObject == nil) {
+      if (responseObject == nil) {
         if (error) {
           *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
                                        code:SSNetWorkCacheErrorInvalidCacheData
@@ -81,51 +105,24 @@
       
       SSNetDataCacheMeta *metadata = [[SSNetDataCacheMeta alloc] init];
       metadata.version = [polocy cacheVersion];
-      metadata.sensitiveDataString = ((NSObject *)[polocy cacheSensitiveData]).description;
       metadata.creationDate = [NSDate date];
       metadata.appVersionString = [SSNetworkUtils appVersionString];
       
       ///< 是否外部拦截缓存事件
       BOOL shouldHoldCacheEvent = NO;
-      SS_SAFE_SEND_MESSAGE(polocy, shouldHoldCacheEventWithRequestBean:){
-        shouldHoldCacheEvent = [polocy shouldHoldCacheEventWithRequestBean:requestBean];
+      SS_SAFE_SEND_MESSAGE(polocy, holdCacheWithRequestBean:){
+        shouldHoldCacheEvent = [polocy holdCacheWithRequestBean:requestBean];
       }
       
       if (shouldHoldCacheEvent) {
-        BOOL canCache = NO;
-        SS_SAFE_SEND_MESSAGE(polocy, canCacheEventWithRequestBean:){
-          canCache = [polocy canCacheEventWithRequestBean:requestBean];
-        }
-        if (canCache) {
-          id cacheObjectByFilter;
-          SS_SAFE_SEND_MESSAGE(polocy, cacheObjectFilter:){
-            cacheObjectByFilter = [polocy cacheObjectFilter:requestBean.responseObject];
-          }
-          if (cacheObjectByFilter == nil) {
-            if (error) {
-              *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                           code:SSNetWorkCacheErrorInvalidCacheData
-                                       userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 数据过滤失败！",requestBean]}];
-            }
-            break;
-          }
-          
-          if (cachePolicy == SSNetRequestCacheMemory) {
-            [cache.memoryCache setObject:cacheObjectByFilter forKey:cacheName];
-            [cache.memoryCache setObject:metadata forKey:cacheMetaName];
-          }else{
-            [cache setObject:cacheObjectByFilter forKey:cacheName];
-            [cache setObject:metadata forKey:cacheMetaName];
-          }
-        }else{
-          SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should write cache!");
-        }
+        SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should write cache!");
+        break;
       }else{
         if (cachePolicy == SSNetRequestCacheMemory) {
-          [cache.memoryCache setObject:requestBean.responseObject forKey:cacheName];
+          [cache.memoryCache setObject:responseObject forKey:cacheName];
           [cache.memoryCache setObject:metadata forKey:cacheMetaName];
         }else{
-          [cache setObject:requestBean.responseObject forKey:cacheName];
+          [cache setObject:responseObject forKey:cacheName];
           [cache setObject:metadata forKey:cacheMetaName];
         }
       }
@@ -150,11 +147,24 @@
   return SSNetWorkCacheHandleNilObject.alloc.init;
 }
 
-- (id<SSNetWorkCacheHandleProtocol>)readCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                            requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                  error:(out NSError **)error
+- (id<SSNetWorkCacheHandleProtocol>)readCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                       error:(out NSError **)error
 {
   do {
+    
+    ///< 缓存策略
+    id<SSNetRequestCachePolocyProtocol>polocy;
+    SS_SAFE_SEND_MESSAGE(requestBean, cachePolocy){
+      polocy = [requestBean cachePolocy];
+    }
+    if (!polocy) {
+      if (error) {
+        *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                 userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缺失缓存策略！",requestBean]}];
+      }
+      break;
+    }
     
     ///< 接口数据是否需要缓存
     BOOL cacheEnable = NO;
@@ -192,8 +202,17 @@
       break;
     }
     
-    NSString *const cacheName = [self cacheName:requestBean];
-    NSString *const cacheMetaName = [self cacheMetaName:requestBean];
+    ///< 缓存标识符
+    NSString *const cacheName = [polocy cacheIdentificationWithRequestBean:requestBean];
+    if (cacheName == nil) {
+      if (error) {
+        *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                 userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
+      }
+      break;
+    }
+    NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
     YYCache *cache = [YYCache cacheWithName:[self cachePath]];
     
     if (cacheEffectiveTime > 0) {
@@ -228,7 +247,7 @@
       
       ///< 缓存版本
       NSString *const cacheVersionFileContent = metadata.version;
-      if ([cacheVersionFileContent isEqualToString:[polocy cacheVersion]]) {
+      if (![cacheVersionFileContent isEqualToString:[polocy cacheVersion]]) {
         if (error) {
           *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
                                        code:SSNetWorkCacheErrorVersionMismatch
@@ -237,58 +256,17 @@
         break;
       }
       
-      ///< 验证数据
-      NSString *sensitiveDataString = metadata.sensitiveDataString;
-      NSString *currentSensitiveDataString = ((NSObject *)[polocy cacheSensitiveData]).description;
-      if (sensitiveDataString || currentSensitiveDataString) {
-        if (sensitiveDataString.length != currentSensitiveDataString.length || ![sensitiveDataString isEqualToString:currentSensitiveDataString]) {
-          if (error) {
-            *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                         code:SSNetWorkCacheErrorSensitiveDataMismatch
-                                     userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 验证码错误！",requestBean]}];
-          }
-          break;
-        }
-      }
-      
       id cacheObject = nil;
       
       ///< 是否外部拦截缓存事件
       BOOL shouldHoldCacheEvent = NO;
-      SS_SAFE_SEND_MESSAGE(polocy, shouldHoldCacheEventWithRequestBean:){
-        shouldHoldCacheEvent = [polocy shouldHoldCacheEventWithRequestBean:requestBean];
+      SS_SAFE_SEND_MESSAGE(polocy, holdCacheWithRequestBean:){
+        shouldHoldCacheEvent = [polocy holdCacheWithRequestBean:requestBean];
       }
       
       if(shouldHoldCacheEvent){
-        BOOL canCache = NO;
-        SS_SAFE_SEND_MESSAGE(polocy, canCacheEventWithRequestBean:){
-          canCache = [polocy canCacheEventWithRequestBean:requestBean];
-        }
-        if (canCache) {
-          id cacheObjectWillFilter = nil;
-          if (cachePolicy == SSNetRequestCacheMemory) {
-            cacheObjectWillFilter = [cache.memoryCache objectForKey:cacheName];
-          }else{
-            cacheObjectWillFilter = [cache objectForKey:cacheName];
-          }
-          
-          id cacheObjectByFilter;
-          SS_SAFE_SEND_MESSAGE(polocy, cacheObjectFilter:){
-            cacheObjectByFilter = [polocy cacheObjectFilter:cacheObjectWillFilter];
-          }
-          if (cacheObjectByFilter == nil) {
-            if (error) {
-              *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                           code:SSNetWorkCacheErrorInvalidCacheData
-                                       userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 数据过滤失败！",requestBean]}];
-            }
-            break;
-          }
-          
-          cacheObject = cacheObjectByFilter;
-        }else{
-          SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should read cache!");
-        }
+        SSNetWorkLog(@"StarShareDevNetWorking -> cacheEvent hold, not should read cache!");
+        break;
       }else{
         if (cachePolicy == SSNetRequestCacheMemory) {
           cacheObject = [cache.memoryCache objectForKey:cacheName];
@@ -301,12 +279,10 @@
         if (error) {
           *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
                                        code:SSNetWorkCacheErrorInvalidCacheData
-                                   userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 数据无效！",requestBean]}];
+                                   userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 没有从缓存中取到有效数据！",requestBean]}];
         }
         break;
       }
-      
-      requestBean.responseObject = cacheObject;
       
       SSYYNetWorkCacheHandle *handle = [[SSYYNetWorkCacheHandle alloc] initWithCache:cache key:cacheName];
       
@@ -331,10 +307,19 @@
                                                    error:(out NSError **)error
 {
   
-  NSString *const cachePath = [self cachePath];
-  NSString *const cacheName = [self cacheName:requestBean];
-  NSString *const cacheMetaName = [self cacheMetaName:requestBean];
-  YYCache *cache = [YYCache cacheWithName:cachePath];
+  ///< 缓存标识符
+  NSString *const cacheName = [polocy cacheIdentificationWithRequestBean:requestBean];
+  if (cacheName == nil) {
+    if (error) {
+      *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                   code:SSNetWorkCacheErrorInvalidCachePolicy
+                               userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
+    }
+    return SSNetWorkCacheHandleNilObject.alloc.init;
+  }
+  NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
+  
+  YYCache *cache = [YYCache cacheWithName:[self cachePath]];
   
   [cache removeObjectForKey:cacheName];
   [cache removeObjectForKey:cacheMetaName];
@@ -342,34 +327,6 @@
   SSYYNetWorkCacheHandle *handle = [[SSYYNetWorkCacheHandle alloc] initWithCache:cache key:cacheName];
   
   return handle;
-}
-
-#pragma marbk - cache name
-
-- (NSString *)cacheName:(in id<SSNetDomainRequestProtocol>)requestBean {
-  NSString *requestUrlString;
-  SS_SAFE_SEND_MESSAGE(requestBean, requestUrlMosaicWithRequestBean:error:){
-    requestUrlString = [requestBean requestUrlMosaicWithRequestBean:requestBean error:NULL];
-  }
-  id requestArgument;
-  SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaicWithRequestBean:error:){
-    requestArgument = [requestBean requestArgumentMosaicWithRequestBean:requestBean error:NULL];
-  }
-  if (requestArgument != nil) {
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentFilterWithArguments:error:){
-      requestArgument = [requestBean requestArgumentFilterWithArguments:requestArgument error:NULL];
-    }
-  }
-  
-  NSString *requestInfo = [NSString stringWithFormat:@"Method:%ld RequestUrl:%@ Argument:%@",
-                           (long)[requestBean requestMethod], requestUrlString, requestArgument];
-  NSString *cacheFileName = [SSNetworkUtils md5StringFromString:requestInfo];
-  return cacheFileName;
-}
-
-- (NSString *)cacheMetaName:(in id<SSNetDomainRequestProtocol>)requestBean {
-  NSString *cacheFileName = [self cacheName:requestBean];
-  return [cacheFileName stringByAppendingString:@"metadata"];
 }
 
 #pragma mark - cache path

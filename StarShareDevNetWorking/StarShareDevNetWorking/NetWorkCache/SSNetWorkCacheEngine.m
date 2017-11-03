@@ -29,31 +29,26 @@
   return self;
 }
 
-- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError *__autoreleasing *)error
+- (id<SSNetWorkCacheHandleProtocol>)writeCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                               responseObject:(in id)responseObject
+                                                        error:(out NSError *__autoreleasing *)error
 {
-  return [self.yyCacheEngine writeCacheWithPolocy:polocy
-                                      requestBean:requestBean
-                                            error:error];
+  return [self.yyCacheEngine writeCacheWithRequestBean:requestBean
+                                        responseObject:responseObject
+                                                 error:error];
 }
 
-- (id<SSNetWorkCacheHandleProtocol>)readCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                            requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                  error:(out NSError *__autoreleasing *)error
+- (id<SSNetWorkCacheHandleProtocol>)readCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                       error:(out NSError *__autoreleasing *)error
 {
-  return [self.yyCacheEngine readCacheWithPolocy:polocy
-                                     requestBean:requestBean
-                                           error:error];
+  return [self.yyCacheEngine readCacheWithRequestBean:requestBean
+                                                error:error];
 }
 
-- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError *__autoreleasing *)error
-{
-  return [self.yyCacheEngine clearCacheWithPolocy:polocy
-                                      requestBean:requestBean
-                                            error:error];
+- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                        error:(out NSError *__autoreleasing *)error {
+  return [self.yyCacheEngine clearCacheWithRequestBean:requestBean
+                                                 error:error];
 }
 
 @end

@@ -10,5 +10,19 @@
 
 @implementation HomePageCachePolocy
 
+- (BOOL)needCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+{
+  return YES;
+}
+
+- (SSNetRequestCachePolicy)cachePolicyWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+{
+  return SSNetRequestCacheDisk;
+}
+
+- (NSString *)cacheIdentificationWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+{
+  return @"HomePageCachePolocy";
+}
 
 @end
