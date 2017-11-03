@@ -21,6 +21,7 @@
 @implementation SSAFNetWorkEngine{
   dispatch_queue_t _processingQueue;
   NSIndexSet *_allStatusCodes;
+  NSSet <NSString *> *_allContentTypes;
 }
 
 #pragma mark - <Instancetype>
@@ -32,6 +33,7 @@
     
     _processingQueue = dispatch_queue_create("com.starshare.networkengine.processing", DISPATCH_QUEUE_CONCURRENT);
     _allStatusCodes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(100, 500)];
+    _allContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",  @"text/html",nil];
     
     _manager.responseSerializer = self.httpResponseSerializer;
     _manager.completionQueue = _processingQueue;
@@ -45,6 +47,7 @@
   if (!_httpResponseSerializer) {
     _httpResponseSerializer = [AFHTTPResponseSerializer serializer];
     _httpResponseSerializer.acceptableStatusCodes = _allStatusCodes;
+    _httpResponseSerializer.acceptableContentTypes = _allContentTypes;
   }
   return _httpResponseSerializer;
 }
@@ -53,6 +56,7 @@
   if (!_jsonResponseSerializer) {
     _jsonResponseSerializer = [AFJSONResponseSerializer serializer];
     _jsonResponseSerializer.acceptableStatusCodes = _allStatusCodes;
+    _jsonResponseSerializer.acceptableContentTypes = _allContentTypes;
   }
   return _jsonResponseSerializer;
 }
@@ -61,6 +65,7 @@
   if (!_xmlParserResponseSerialzier) {
     _xmlParserResponseSerialzier = [AFXMLParserResponseSerializer serializer];
     _xmlParserResponseSerialzier.acceptableStatusCodes = _allStatusCodes;
+    _xmlParserResponseSerialzier.acceptableContentTypes = _allContentTypes;
   }
   return _xmlParserResponseSerialzier;
 }
