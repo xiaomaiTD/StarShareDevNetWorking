@@ -76,11 +76,6 @@
   return [StarShareNetEngine sharedInstance].engineConfigation.publicArgument;
 }
 
-- (nullable id)cacheFileNameFilterForRequestArgument:(id)argument
-{
-  return argument;
-}
-
 - (nullable SSNetRequestData*)requestData
 {
   return nil;
@@ -99,11 +94,6 @@
 - (id<SSNetRequestCachePolocyProtocol>)cachePolocy
 {
   return [[SSNetWorkCachePolocy alloc] init];
-}
-
-- (SSNetRequestPolicy)requestPolicyWithRequestBean:(nonnull in id<SSNetDomainRequestProtocol>)requestBean
-{
-  return SSNetRequestReadCacheWithUpdate;
 }
 
 #pragma mark - <SSNetDomainRequestHelperProtocol>

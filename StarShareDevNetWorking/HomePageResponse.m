@@ -19,7 +19,7 @@
 
 - (id)jsonStrucAndValueValidator
 {
-  return @{@"status":@(0),
+  return @{@"status":@(1),
            @"msg":@"成功"
            };
 }

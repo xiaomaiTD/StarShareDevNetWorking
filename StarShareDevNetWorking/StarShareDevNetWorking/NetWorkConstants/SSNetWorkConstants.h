@@ -52,15 +52,16 @@ NS_ENUM(NSStringEncoding) {
   
 typedef NSUInteger SSNetRequestDataType;
 NS_ENUM(NSStringEncoding) {
-  SSNetRequestDataTypeFile = 0,
-  SSNetRequestDataTypeForm = 1,
-  SSNetRequestDataTypeFileUrl = 2,
+  SSNetRequestDataTypeFile = 1,
+  SSNetRequestDataTypeForm = 2,
+  SSNetRequestDataTypeFileUrl = 3,
 };
     
-typedef NSUInteger SSNetRequestPolicy;
+typedef NSUInteger SSNetRequestReadCachePolicy;
 NS_ENUM(NSStringEncoding) {
-  SSNetRequestReadCacheOnly = 1,
-  SSNetRequestReadCacheWithUpdate = 2
+  SSNetRequestReadCacheNever = 1,
+  SSNetRequestReadCacheFirst = 0,
+  SSNetRequestReadCacheEver = 2,
 };
     
 typedef NSUInteger SSNetRequestCachePolicy;

@@ -23,9 +23,14 @@
   return -1;
 }
 
+- (SSNetRequestReadCachePolicy)readCachePolicyWithRequestBean:(nonnull in id<SSNetDomainRequestProtocol>)requestBean
+{
+  return SSNetRequestReadCacheFirst;
+}
+
 - (NSString * _Nonnull)cacheIdentificationWithRequestBean:(nonnull in SSNetDomainBeanRequest *)requestBean
 {
-  return @"";
+  return [NSString stringWithFormat:@"%s",object_getClassName(requestBean)];
 }
 
 - (NSString * _Nonnull)cacheVersion

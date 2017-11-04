@@ -21,8 +21,8 @@ FOUNDATION_EXPORT void SSNetWorkLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,
 + (BOOL)validateResumeData:(NSData *)data;
 + (NSString *)requestMethod:(SSNetRequestMethod)method;
 + (NSString *)requestPriority:(SSNetRequestPriority)priority;
-+ (NSString *)cachePolicy:(SSNetRequestPolicy)policy;
-+ (NSString *)requestPolicy:(SSNetRequestPolicy)policy;
++ (NSString *)cachePolicy:(SSNetRequestCachePolicy)policy;
++ (NSString *)readCachePolicy:(SSNetRequestReadCachePolicy)policy;
 
 @end
 

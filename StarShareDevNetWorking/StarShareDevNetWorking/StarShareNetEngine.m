@@ -22,8 +22,10 @@
 
 @interface SSNetDomainBeanRequest (Private_Status)
 @property (nonatomic, assign) BOOL isExecuting;
+@property (nonatomic, assign) BOOL isFirstRequested;
 @end
 static char *ExecutingKey = "ExecutingKey";
+static char *FirstRequested = "FirstRequested";
 @implementation SSNetDomainBeanRequest (Private_Status)
 - (void)setIsExecuting:(BOOL)isExecuting
 {
@@ -32,6 +34,15 @@ static char *ExecutingKey = "ExecutingKey";
 - (BOOL)isExecuting
 {
   id obj = objc_getAssociatedObject(self, ExecutingKey);
+  return obj ? [obj boolValue] : NO;
+}
+- (void)setIsFirstRequested:(BOOL)isFirstRequested
+{
+  objc_setAssociatedObject(self, FirstRequested, @(isFirstRequested), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+- (BOOL)isFirstRequested
+{
+  id obj = objc_getAssociatedObject(self, FirstRequested);
   return obj ? [obj boolValue] : NO;
 }
 @end
@@ -236,14 +247,14 @@ static char *ExecutingKey = "ExecutingKey";
     }
     
     ///< 缓存数据读取策略
-    SSNetRequestPolicy requestPolicy = SSNetRequestReadCacheWithUpdate;
-    SS_SAFE_SEND_MESSAGE(cachePolocy, requestPolicyWithRequestBean:){
-      requestPolicy = [requestBean requestPolicyWithRequestBean:requestBean];
+    SSNetRequestReadCachePolicy readCachePolicy = SSNetRequestReadCacheFirst;
+    SS_SAFE_SEND_MESSAGE(cachePolocy, readCachePolicyWithRequestBean:){
+      readCachePolicy = [cachePolocy readCachePolicyWithRequestBean:requestBean];
     }
     
     ///< 读取缓存数据
     id cacheData = nil;
-    if (cacheEnable) {
+    if (cacheEnable && (readCachePolicy == SSNetRequestReadCacheEver || (readCachePolicy == SSNetRequestReadCacheFirst && requestBean.isFirstRequested == NO))) {
       NSError *cacheError;
       id<SSNetWorkCacheHandleProtocol> cacheHandle =
       [self.cacheEngine readCacheWithRequestBean:requestBean
@@ -256,11 +267,47 @@ static char *ExecutingKey = "ExecutingKey";
       }
     }
     
-    ///< 返回缓存数据
-    if (cacheData) {
+    SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nReadCachePolicy: %@ \nCachePolicy: %@ \nDataFromCache: %@ \n#############################",
+                 requestUrlString,
+                 [SSNetworkUtils requestMethod:method],
+                 fullParams,
+                 [SSNetworkUtils requestPriority:priority],
+                 headers,
+                 @(timeout),
+                 BOOL_STRING(allowsCellularAccess),
+                 BOOL_STRING(cacheEnable),
+                 [SSNetworkUtils readCachePolicy:[cachePolocy readCachePolicyWithRequestBean:requestBean]],
+                 [SSNetworkUtils cachePolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
+                 BOOL_STRING(cacheEnable && cacheData != nil));
+    
+    ///< 读取缓存的策略是只有第一次请求读取缓存，并且是第一次请求，并且读取到了缓存数据，并且支持缓存
+    if (readCachePolicy == SSNetRequestReadCacheFirst && cacheData && requestBean.isFirstRequested == NO) {
       
       responseBean.responseObject = cacheData;
       responseBean.dataFromCache = YES;
+      requestBean.isFirstRequested = YES;
+      
+      ///< 告诉请求完成，进行模型解析等操作
+      SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
+        [responseBean complementWithRequestBean:requestBean respondBean:responseBean isDataFromCache:YES];
+      }
+      
+      if (successed) {
+        successed(requestBean,responseBean,YES);
+      }
+      
+      if (end != NULL) {
+        end();
+      }
+      return [[SSNetWorkEngineHandleNilObject alloc] init];
+    }
+    
+    ///< 读取缓存的策略是每次都读取缓存，并且读取到了缓存数据
+    if (readCachePolicy == SSNetRequestReadCacheEver && cacheData) {
+      
+      responseBean.responseObject = cacheData;
+      responseBean.dataFromCache = YES;
+      requestBean.isFirstRequested = YES;
       
       ///< 告诉请求完成，进行模型解析等操作
       SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
@@ -273,24 +320,9 @@ static char *ExecutingKey = "ExecutingKey";
       
     }
     
-    SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nreadCachePolicy: %@ \nwriteCachePolicy: %@ \nDataFromCache: %@ \n#############################",
-                 requestUrlString,
-                 [SSNetworkUtils requestMethod:method],
-                 fullParams,
-                 [SSNetworkUtils requestPriority:priority],
-                 headers,
-                 @(timeout),
-                 BOOL_STRING(allowsCellularAccess),
-                 BOOL_STRING(cacheEnable),
-                 [SSNetworkUtils requestPolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
-                 [SSNetworkUtils cachePolicy:[requestBean requestPolicyWithRequestBean:requestBean]],
-                 BOOL_STRING(cacheEnable && cacheData != nil));
-    
-    if (requestPolicy == SSNetRequestReadCacheOnly && cacheData) {
-      if (end != NULL) {
-        end();
-      }
-      return [[SSNetWorkEngineHandleNilObject alloc] init];
+    ///< 读取缓存的策略是从来都不读取缓存数据，不做任何处理，直接请求网络最新数据
+    if (readCachePolicy == SSNetRequestReadCacheNever) {
+      
     }
     
     __block SSNetDomainBeanRequest *domainBeanRequest = requestBean;
@@ -302,6 +334,7 @@ static char *ExecutingKey = "ExecutingKey";
       domainBeanResponse.responseObject = responseObject;
       domainBeanResponse.dataFromCache = NO;
       domainBeanRequest.isExecuting = NO;
+      domainBeanRequest.isFirstRequested = YES;
       
       NSError *validatError = nil;
       
@@ -434,6 +467,7 @@ static char *ExecutingKey = "ExecutingKey";
                                                                                       domainBeanResponse.responseObject = responseObject;
                                                                                       domainBeanResponse.dataFromCache = NO;
                                                                                       domainBeanRequest.isExecuting = NO;
+                                                                                      domainBeanRequest.isFirstRequested = YES;
                                                                                       
                                                                                       if (failed != NULL) {
                                                                                         if ([NSThread currentThread] != [NSThread mainThread]) {

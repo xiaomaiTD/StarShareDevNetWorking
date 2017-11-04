@@ -20,9 +20,4 @@
   return SSNetRequestCacheDisk;
 }
 
-- (NSString *)cacheIdentificationWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
-{
-  return @"HomePageCachePolocy";
-}
-
 @end

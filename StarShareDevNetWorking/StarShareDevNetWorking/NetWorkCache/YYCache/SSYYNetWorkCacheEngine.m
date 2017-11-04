@@ -302,10 +302,23 @@
   return SSNetWorkCacheHandleNilObject.alloc.init;
 }
 
-- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithPolocy:(in id<SSNetRequestCachePolocyProtocol>)polocy
-                                             requestBean:(in SSNetDomainBeanRequest *)requestBean
-                                                   error:(out NSError **)error
+- (id<SSNetWorkCacheHandleProtocol>)clearCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                                        error:(out NSError **)error
 {
+  
+  ///< 缓存策略
+  id<SSNetRequestCachePolocyProtocol>polocy;
+  SS_SAFE_SEND_MESSAGE(requestBean, cachePolocy){
+    polocy = [requestBean cachePolocy];
+  }
+  if (!polocy) {
+    if (error) {
+      *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                   code:SSNetWorkCacheErrorInvalidCachePolicy
+                               userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缺失缓存策略！",requestBean]}];
+    }
+    return SSNetWorkCacheHandleNilObject.alloc.init;
+  }
   
   ///< 缓存标识符
   NSString *const cacheName = [polocy cacheIdentificationWithRequestBean:requestBean];
