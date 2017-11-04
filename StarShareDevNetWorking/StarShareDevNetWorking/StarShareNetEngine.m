@@ -153,15 +153,15 @@ static char *FirstRequested = "FirstRequested";
     if (verificationError) break;
     
     NSDictionary *fullParams = nil;
-    ///< 请求参数过滤
-    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMapWithArguments:error:){
-      fullParams = [requestBean requestArgumentMapWithArguments:fullParams error:&verificationError];
-    };
-    if (verificationError) break;
-    
     ///< 拼接请求参数
     SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMosaicWithRequestBean:error:){
       fullParams = [requestBean requestArgumentMosaicWithRequestBean:requestBean error:&verificationError];
+    };
+    if (verificationError) break;
+    
+    ///< 请求参数过滤
+    SS_SAFE_SEND_MESSAGE(requestBean, requestArgumentMapWithArguments:error:){
+      fullParams = [requestBean requestArgumentMapWithArguments:fullParams error:&verificationError];
     };
     if (verificationError) break;
     
