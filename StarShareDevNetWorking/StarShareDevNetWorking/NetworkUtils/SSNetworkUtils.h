@@ -13,8 +13,7 @@ FOUNDATION_EXPORT void SSNetWorkLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,
 
 @interface SSNetworkUtils : NSObject
 
-+ (BOOL)validateJSONStruc:(id)json withValidator:(id)jsonValidator;
-+ (BOOL)validateJSONValue:(id)json withValidator:(id)jsonValidator;
++ (BOOL)validateJSON:(id)json withValidator:(id)jsonValidator;
 + (void)addDoNotBackupAttribute:(NSString *)path;
 + (NSString *)md5StringFromString:(NSString *)string;
 + (NSString *)appVersionString;

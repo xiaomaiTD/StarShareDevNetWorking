@@ -21,8 +21,7 @@
 @property (nonatomic, strong) id securityPolicy;
 @property (nonatomic, strong) NSDictionary *publicArgument;
 @property (nonatomic, strong) NSDictionary *publicHeaders;
-@property (nonatomic, strong) NSDictionary *jsonStrucValidator;
-@property (nonatomic, strong) NSDictionary *jsonStrucAndValueValidator;
+@property (nonatomic, strong) NSDictionary *jsonValidator;
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) BOOL allowsCellularAccess;
 @end

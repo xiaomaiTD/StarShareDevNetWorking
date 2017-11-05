@@ -22,14 +22,9 @@
 
 #pragma mark - <SSNetDomainResponseHelperProtocol>
 
-- (nullable id)jsonStrucValidator
+- (nullable id)jsonValidator
 {
-  return [StarShareNetEngine sharedInstance].engineConfigation.jsonStrucValidator;
-}
-
-- (nullable id)jsonStrucAndValueValidator
-{
-  return [StarShareNetEngine sharedInstance].engineConfigation.jsonStrucAndValueValidator;
+  return [StarShareNetEngine sharedInstance].engineConfigation.jsonValidator;
 }
 
 @end
