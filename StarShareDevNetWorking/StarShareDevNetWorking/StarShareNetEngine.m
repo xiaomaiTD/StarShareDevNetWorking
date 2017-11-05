@@ -126,7 +126,7 @@ static char *FirstRequested = "FirstRequested";
     ///< 入参内容是否有值检测
     if (requestBean == nil || responseBean == nil) {
       verificationError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                              code:SSNetWorkEngineErrorNilArgument
+                                              code:SSNetWorkEngineErrorNilDomainBean
                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求对象不能为空！",requestBean]}];
       break;
     }
@@ -135,7 +135,7 @@ static char *FirstRequested = "FirstRequested";
     if (![requestBean isKindOfClass:[SSNetDomainBeanRequest class]] ||
         ![responseBean isKindOfClass:[SSNetDomainBeanResponse class]]) {
       verificationError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                              code:SSNetWorkEngineErrorIllegalArgument
+                                              code:SSNetWorkEngineErrorDomainBeanInvalid
                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求对象不合法！",requestBean]}];
       break;
     }
@@ -214,7 +214,7 @@ static char *FirstRequested = "FirstRequested";
     };
     if(data != nil && ![data isKindOfClass:[SSNetRequestData class]]){
       verificationError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                              code:SSNetWorkEngineErrorMethodReturnValueInvalid
+                                              code:SSNetWorkEngineErrorPostDataInvalid
                                           userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ POST 数据不合法！",requestBean]}];
       break;
     }
@@ -347,9 +347,27 @@ static char *FirstRequested = "FirstRequested";
         }
         if (!statusCodeValidator) {
           validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                             code:SSNetWorkEngineErrorNetResponseBeanInvalid
+                                             code:SSNetWorkEngineErrorNetStatusCodeInvalid
                                          userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 网络请求状态码校验失败！",requestBean]}];
           break;
+        }
+        
+        ///< 错误码校验
+        NSString *codeKey = self.engineConfigation.codeKey;
+        NSInteger rightCode = self.engineConfigation.rightCode;
+        NSDictionary *errorCodeInfos = self.engineConfigation.errorCodeInfo;
+        if (codeKey && codeKey.length > 0 && [responseObject objectForKey:codeKey]) {
+          NSInteger responseCode = [[responseObject objectForKey:codeKey] integerValue];
+          if (responseCode != rightCode) {
+            NSString *errorMessage = @"响应数据状态码校验失败！";
+            if (errorCodeInfos && [errorCodeInfos objectForKey:[NSString stringWithFormat:@"%li",responseCode]]) {
+              errorMessage = [errorCodeInfos objectForKey:[NSString stringWithFormat:@"%li",responseCode]];
+            }
+            validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
+                                               code:SSNetWorkEngineErrorResponseStatusCodeInvalid
+                                           userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
+            break;
+          }
         }
         
         ///< 校验响应数据 json 合法性
@@ -366,7 +384,7 @@ static char *FirstRequested = "FirstRequested";
           BOOL result = [SSNetworkUtils validateJSONValue:json withValidator:strusAndValueValidator];
           if (!result) {
             validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                               code:SSNetWorkEngineErrorNetResponseBeanInvalid
+                                               code:SSNetWorkEngineErrorResponseJSONInvalid
                                            userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ JSON 结构和值校验失败！",requestBean]}];
             break;
           }
@@ -374,7 +392,7 @@ static char *FirstRequested = "FirstRequested";
           BOOL result = [SSNetworkUtils validateJSONStruc:json withValidator:strusValidator];
           if (!result) {
             validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                               code:SSNetWorkEngineErrorNetResponseBeanInvalid
+                                               code:SSNetWorkEngineErrorResponseJSONInvalid
                                            userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ JSON 结构校验失败！",requestBean]}];
             break;
           }

@@ -71,7 +71,7 @@
     if (cachePolicy != SSNetRequestCacheMemory && cachePolicy != SSNetRequestCacheDisk){
       if (error) {
         *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                     code:SSNetWorkCacheErrorInvalidCacheType
                                  userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 存储方式无效！",requestBean]}];
       }
       break;
@@ -82,7 +82,7 @@
     if (cacheName == nil) {
       if (error) {
         *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                     code:SSNetWorkCacheErrorInvalidCacheKey
                                  userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
       }
       break;
@@ -196,7 +196,7 @@
     if (cachePolicy != SSNetRequestCacheMemory && cachePolicy != SSNetRequestCacheDisk){
       if (error) {
         *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                     code:SSNetWorkCacheErrorInvalidCacheType
                                  userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 存储方式无效！",requestBean]}];
       }
       break;
@@ -207,7 +207,7 @@
     if (cacheName == nil) {
       if (error) {
         *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                     code:SSNetWorkCacheErrorInvalidCachePolicy
+                                     code:SSNetWorkCacheErrorInvalidCacheKey
                                  userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
       }
       break;
@@ -241,6 +241,18 @@
           *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
                                        code:SSNetWorkCacheErrorInvalidMetadata
                                    userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 元数据获取失败！",requestBean]}];
+        }
+        break;
+      }
+      
+      ///< 缓存是否过期
+      NSDate *creationDate = metadata.creationDate;
+      NSTimeInterval duration = -[creationDate timeIntervalSinceNow];
+      if (duration < 0 || duration > cacheEffectiveTime) {
+        if (error) {
+          *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
+                                       code:SSNetWorkCacheErrorInvalidCacheTime
+                                   userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 时间过期！",requestBean]}];
         }
         break;
       }
@@ -325,7 +337,7 @@
   if (cacheName == nil) {
     if (error) {
       *error = [NSError errorWithDomain:SSNetWorkCacheErrorDomain
-                                   code:SSNetWorkCacheErrorInvalidCachePolicy
+                                   code:SSNetWorkCacheErrorInvalidCacheKey
                                userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络缓存：%@ 缓存标识不能为空！",requestBean]}];
     }
     return SSNetWorkCacheHandleNilObject.alloc.init;

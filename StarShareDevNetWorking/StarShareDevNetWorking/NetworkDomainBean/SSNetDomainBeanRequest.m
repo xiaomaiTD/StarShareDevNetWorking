@@ -124,7 +124,7 @@
   if (baseUrl == nil || baseUrl.length == 0) {
     if (error) {
       *error = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                   code:SSNetWorkEngineErrorMethodReturnValueInvalid
+                                   code:SSNetWorkEngineErrorRequestUrlInvalid
                                userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 地址不能为空！",requestBean]}];
     }
     return nil;
@@ -149,7 +149,7 @@
       (requestArgument != nil && ![requestArgument isKindOfClass:[NSDictionary class]])) {
     if (error) {
       *error = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                   code:SSNetWorkEngineErrorMethodReturnValueInvalid
+                                   code:SSNetWorkEngineErrorRequestArgumentInvalid
                                userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"网络请求：%@ 请求参数类型错误（不是字典）！",requestBean]}];
     }
   }

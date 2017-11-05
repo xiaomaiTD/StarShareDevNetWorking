@@ -74,26 +74,28 @@ NS_ENUM(NSStringEncoding) {
 NS_ENUM(NSInteger) {
   SSNetWorkCacheErrorExpired = -1,
   SSNetWorkCacheErrorVersionMismatch = -2,
-  SSNetWorkCacheErrorSensitiveDataMismatch = -3,
-  SSNetWorkCacheErrorAppVersionMismatch = -4,
-  SSNetWorkCacheErrorInvalidCacheTime = -5,
-  SSNetWorkCacheErrorInvalidMetadata = -6,
-  SSNetWorkCacheErrorInvalidCacheData = -7,
-  SSNetWorkCacheErrorInvalidCacheEnable = -8,
-  SSNetWorkCacheErrorInvalidCachePolicy = -9
+  SSNetWorkCacheErrorAppVersionMismatch = -3,
+  SSNetWorkCacheErrorInvalidCacheTime = -4,
+  SSNetWorkCacheErrorInvalidMetadata = -5,
+  SSNetWorkCacheErrorInvalidCacheData = -6,
+  SSNetWorkCacheErrorInvalidCacheEnable = -7,
+  SSNetWorkCacheErrorInvalidCachePolicy = -8,
+  SSNetWorkCacheErrorInvalidCacheType = -9,
+  SSNetWorkCacheErrorInvalidCacheKey = -10
 };
   
 #define SSNetWorkEngineErrorDomain @"com.starshare.engine"
 NS_ENUM(NSInteger) {
   SSNetWorkEngineErrorNone = -1024,
-  SSNetWorkEngineErrorEngine = 1000,
-  SSNetWorkEngineErrorProgramming = 1001,
-  SSNetWorkEngineErrorNilArgument = 1002,
-  SSNetWorkEngineErrorIllegalArgument = 1003,
-  SSNetWorkEngineErrorNullPointer = 1004,
-  SSNetWorkEngineErrorMethodReturnValueInvalid = 1005,
-  SSNetWorkEngineErrorNetRequestBeanInvalid = 1006,
-  SSNetWorkEngineErrorNetResponseBeanInvalid = 1007,
+  SSNetWorkEngineErrorNilDomainBean = 1001,
+  SSNetWorkEngineErrorDomainBeanInvalid = 1002,
+  SSNetWorkEngineErrorNullPointer = 1003,
+  SSNetWorkEngineErrorRequestUrlInvalid = 1004,
+  SSNetWorkEngineErrorNetStatusCodeInvalid = 1005,
+  SSNetWorkEngineErrorResponseStatusCodeInvalid = 1006,
+  SSNetWorkEngineErrorResponseJSONInvalid = 1007,
+  SSNetWorkEngineErrorRequestArgumentInvalid = 1008,
+  SSNetWorkEngineErrorPostDataInvalid = 1009
 };
 
 typedef void (^SSNetRequestSuccessedCallback)(NSURLResponse * __unused response,id responseObject);

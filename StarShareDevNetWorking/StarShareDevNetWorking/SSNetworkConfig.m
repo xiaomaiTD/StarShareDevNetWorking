@@ -24,6 +24,9 @@
   if (self) {
     _baseUrl = @"";
     _cachePath = @"StarShareRequestCache";
+    _codeKey = nil;
+    _rightCode = 1;
+    _errorCodeInfo = @{};
     _debugLogEnabled = YES;
     _securityPolicy = nil;
     _publicArgument = nil;
