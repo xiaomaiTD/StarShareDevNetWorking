@@ -10,6 +10,9 @@
 #import "SSNetworkConfig.h"
 #import "SSNetWorkEngineHandle.h"
 #import "SSAFNetWorkEngineHandle.h"
+#import "SSNetworkUtils.h"
+
+#define kStarShareNetworkIncompleteDownloadFolderName @"Incomplete"
 
 @interface SSAFNetWorkEngine()
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
@@ -140,6 +143,73 @@
   return requestHandle;
 }
 
+- (id<SSNetRequestHandleProtocol>)downloadWithUrlString:(in NSString *)urlString
+                                         securityPolicy:(in id)securityPolicy
+                                                 method:(in SSNetRequestMethod)method
+                                      requestSerializer:(in SSNetRequestSerializer)requestSerializer
+                                               priority:(in SSNetRequestPriority)priority
+                                          authorization:(in NSArray *)authorization
+                                                headers:(in NSDictionary *)headers
+                                               argument:(in id)argument
+                                  resumableDownloadPath:(in NSString*)resumableDownloadPath
+                                                timeout:(in NSTimeInterval)timeout
+                                   allowsCellularAccess:(in BOOL)allowsCellularAccess
+                                               progress:(in SSNetDownloadProgressCallback)progress
+                                               complete:(in SSNetDownloadCompleteCallback)complete
+                                                failure:(in SSNetRequestFailedCallback)failure
+{
+  if (securityPolicy != nil && [securityPolicy isKindOfClass:[AFSecurityPolicy class]]) {
+    _manager.securityPolicy = securityPolicy;
+  }
+  
+  NSError * __autoreleasing requestSerializationError = nil;
+  NSURLSessionDataTask *task = [self sessionTaskForUrlString:urlString
+                                                      method:method
+                                           requestSerializer:requestSerializer
+                                               authorization:authorization
+                                                     headers:headers
+                                                    argument:argument
+                                                     timeout:timeout
+                                       resumableDownloadPath:resumableDownloadPath
+                                        allowsCellularAccess:allowsCellularAccess
+                                                    progress:progress
+                                                    complete:complete
+                                                     failure:failure
+                                                       error:&requestSerializationError];
+  if (requestSerializationError) {
+    if (failure) {
+      failure(nil,nil,requestSerializationError);
+    }
+    return [[SSNetWorkEngineHandleNilObject alloc] init];
+  }
+  
+  NSAssert(task != nil, @"requestTask should not be nil");
+  
+  if ([task respondsToSelector:@selector(priority)]) {
+    switch (priority) {
+      case SSNetRequestPriorityHigh:
+      case SSNetRequestPriorityVeryHigh:
+        task.priority = NSURLSessionTaskPriorityHigh;
+        break;
+      case SSNetRequestPriorityLow:
+      case SSNetRequestPriorityVeryLow:
+        task.priority = NSURLSessionTaskPriorityLow;
+        break;
+      case SSNetRequestPriorityNormal:
+        /*!!fall through*/
+      default:
+        task.priority = NSURLSessionTaskPriorityDefault;
+        break;
+    }
+  }
+  
+  [task resume];
+  
+  SSAFNetWorkEngineHandle *requestHandle = [[SSAFNetWorkEngineHandle alloc] initWithTask:task];
+  
+  return requestHandle;
+}
+
 #pragma mark - sessionTask
 
 - (NSURLSessionDataTask *)sessionTaskForUrlString:(NSString *)urlString
@@ -223,6 +293,34 @@
     default:
       return nil;
   }
+}
+
+- (NSURLSessionDataTask *)sessionTaskForUrlString:(NSString *)urlString
+                                           method:(SSNetRequestMethod)method
+                                requestSerializer:(SSNetRequestSerializer)requestSerializer
+                                    authorization:(NSArray *)authorization
+                                          headers:(NSDictionary *)headers
+                                         argument:(id)argument
+                                          timeout:(NSTimeInterval)timeout
+                            resumableDownloadPath:(NSString*)resumableDownloadPath
+                             allowsCellularAccess:(BOOL)allowsCellularAccess
+                                         progress:(SSNetDownloadProgressCallback)progress
+                                         complete:(SSNetDownloadCompleteCallback)complete
+                                          failure:(SSNetRequestFailedCallback)failure
+                                            error:(NSError * _Nullable __autoreleasing *)error {
+  AFHTTPRequestSerializer *AFRequestSerializer = [self requestSerializer:requestSerializer
+                                                         timeoutInterval:timeout
+                                                    allowsCellularAccess:allowsCellularAccess
+                                                     authorizationHeader:authorization
+                                                                 headers:headers];
+  
+  return (NSURLSessionDataTask *)[self dataTaskWithDownloadPath:resumableDownloadPath
+                                              requestSerializer:AFRequestSerializer
+                                                      URLString:urlString
+                                                     parameters:argument
+                                                       progress:progress
+                                                       complete:complete
+                                                          error:error];
 }
 
 #pragma mark - data task
@@ -324,6 +422,98 @@
                          }];
   
   return dataTask;
+}
+
+- (NSURLSessionDownloadTask *)dataTaskWithDownloadPath:(NSString *)downloadPath
+                                     requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+                                             URLString:(NSString *)URLString
+                                            parameters:(id)parameters
+                                              progress:(SSNetDownloadProgressCallback)progress
+                                              complete:(SSNetDownloadCompleteCallback)complete
+                                                 error:(NSError * _Nullable __autoreleasing *)error {
+  NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
+  
+  NSString *downloadTargetPath;
+  BOOL isDirectory;
+  if(![[NSFileManager defaultManager] fileExistsAtPath:downloadPath isDirectory:&isDirectory]) {
+    isDirectory = NO;
+  }
+  
+  if (isDirectory) {
+    NSString *fileName = [urlRequest.URL lastPathComponent];
+    downloadTargetPath = [NSString pathWithComponents:@[downloadPath, fileName]];
+  } else {
+    downloadTargetPath = downloadPath;
+  }
+  
+  if ([[NSFileManager defaultManager] fileExistsAtPath:downloadTargetPath]) {
+    [[NSFileManager defaultManager] removeItemAtPath:downloadTargetPath error:nil];
+  }
+  
+  BOOL resumeDataFileExists = [[NSFileManager defaultManager] fileExistsAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path];
+  NSData *data = [NSData dataWithContentsOfURL:[self incompleteDownloadTempPathForDownloadPath:downloadPath]];
+  BOOL resumeDataIsValid = [SSNetworkUtils validateResumeData:data];
+  
+  BOOL canBeResumed = resumeDataFileExists && resumeDataIsValid;
+  BOOL resumeSucceeded = NO;
+  __block NSURLSessionDownloadTask *downloadTask = nil;
+  
+  if (canBeResumed) {
+    @try {
+      downloadTask = [_manager downloadTaskWithResumeData:data
+                                                 progress:progress
+                                              destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                                                return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
+                                              } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                                if (complete) {
+                                                  complete(response,filePath,error);
+                                                }
+                                              }];
+      resumeSucceeded = YES;
+    } @catch (NSException *exception) {
+      SSNetWorkLog(@"Resume download failed, reason = %@", exception.reason);
+      resumeSucceeded = NO;
+    }
+  }
+  
+  if (!resumeSucceeded) {
+    downloadTask = [_manager downloadTaskWithRequest:urlRequest
+                                            progress:progress
+                                         destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                                           return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
+                                         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                           if (complete) {
+                                             complete(response,filePath,error);
+                                           }
+                                         }];
+  }
+  return downloadTask;
+}
+
+#pragma mark - Resumable Download
+
+- (NSString *)incompleteDownloadTempCacheFolder {
+  NSFileManager *fileManager = [NSFileManager new];
+  static NSString *cacheFolder;
+  
+  if (!cacheFolder) {
+    NSString *cacheDir = NSTemporaryDirectory();
+    cacheFolder = [cacheDir stringByAppendingPathComponent:kStarShareNetworkIncompleteDownloadFolderName];
+  }
+  
+  NSError *error = nil;
+  if(![fileManager createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
+    SSNetWorkLog(@"Failed to create cache directory at %@", cacheFolder);
+    cacheFolder = nil;
+  }
+  return cacheFolder;
+}
+
+- (NSURL *)incompleteDownloadTempPathForDownloadPath:(NSString *)downloadPath {
+  NSString *tempPath = nil;
+  NSString *md5URLString = [SSNetworkUtils md5StringFromString:downloadPath];
+  tempPath = [[self incompleteDownloadTempCacheFolder] stringByAppendingPathComponent:md5URLString];
+  return [NSURL fileURLWithPath:tempPath];
 }
 
 #pragma mark - requestSerializer

@@ -100,7 +100,9 @@ NS_ENUM(NSInteger) {
 
 typedef void (^SSNetRequestSuccessedCallback)(NSURLResponse * __unused response,id responseObject);
 typedef void (^SSNetRequestFailedCallback)(NSURLResponse * __unused response, id responseObject,NSError *error);
-
+typedef void (^SSNetDownloadCompleteCallback)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error);
+typedef void (^SSNetDownloadProgressCallback)(NSProgress *downloadProgress);
+  
 typedef void (^SSNetEngineRequestBeanBeginBlock)(void);
 typedef void (^SSNetEngineRequestBeanEndBlock)(void);
 typedef void (^SSNetEngineRequestBeanSuccessedBlock)(id requestDomainBean,id respondDomainBean,BOOL dataFromCache);

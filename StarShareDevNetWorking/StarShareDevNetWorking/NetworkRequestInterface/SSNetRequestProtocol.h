@@ -46,4 +46,19 @@
                                                success:(in SSNetRequestSuccessedCallback)success
                                                failure:(in SSNetRequestFailedCallback)failure;
 
+- (id<SSNetRequestHandleProtocol>)downloadWithUrlString:(in NSString *)urlString
+                                         securityPolicy:(in id)securityPolicy
+                                                 method:(in SSNetRequestMethod)method
+                                      requestSerializer:(in SSNetRequestSerializer)requestSerializer
+                                               priority:(in SSNetRequestPriority)priority
+                                          authorization:(in NSArray *)authorization
+                                                headers:(in NSDictionary *)headers
+                                               argument:(in id)argument
+                                  resumableDownloadPath:(in NSString*)resumableDownloadPath
+                                                timeout:(in NSTimeInterval)timeout
+                                   allowsCellularAccess:(in BOOL)allowsCellularAccess
+                                               progress:(in SSNetDownloadProgressCallback)progress
+                                               complete:(in SSNetDownloadCompleteCallback)complete
+                                                failure:(in SSNetRequestFailedCallback)failure;
+
 @end
