@@ -303,7 +303,6 @@ static char *FirstRequested = "FirstRequested";
       
       responseBean.responseObject = cacheData;
       responseBean.dataFromCache = YES;
-      requestBean.isFirstRequested = YES;
       
       ///< 告诉请求完成，进行模型解析等操作
       SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
@@ -314,10 +313,6 @@ static char *FirstRequested = "FirstRequested";
         successed(requestBean,responseBean,YES);
       }
       
-      if (end != NULL) {
-        end();
-      }
-      return [[SSNetWorkEngineHandleNilObject alloc] init];
     }
     
     ///< 读取缓存的策略是每次都读取缓存，并且读取到了缓存数据
@@ -325,7 +320,6 @@ static char *FirstRequested = "FirstRequested";
       
       responseBean.responseObject = cacheData;
       responseBean.dataFromCache = YES;
-      requestBean.isFirstRequested = YES;
       
       ///< 告诉请求完成，进行模型解析等操作
       SS_SAFE_SEND_MESSAGE(responseBean, complementWithRequestBean:respondBean:isDataFromCache:){
@@ -491,7 +485,6 @@ static char *FirstRequested = "FirstRequested";
                                                                                       domainBeanResponse.responseObject = responseObject;
                                                                                       domainBeanResponse.dataFromCache = NO;
                                                                                       domainBeanRequest.isExecuting = NO;
-                                                                                      domainBeanRequest.isFirstRequested = YES;
                                                                                       
                                                                                       if (failed != NULL) {
                                                                                         if ([NSThread currentThread] != [NSThread mainThread]) {
