@@ -398,7 +398,7 @@ static char *FirstRequested = "FirstRequested";
               errorMessage = [errorCodeInfos objectForKey:[NSString stringWithFormat:@"%li",responseCode]];
             }
             validatError = [NSError errorWithDomain:SSNetWorkEngineErrorDomain
-                                               code:SSNetWorkEngineErrorResponseStatusCodeInvalid
+                                               code:responseCode
                                            userInfo:@{NSLocalizedDescriptionKey:errorMessage}];
             break;
           }
