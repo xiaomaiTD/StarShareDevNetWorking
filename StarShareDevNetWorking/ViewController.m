@@ -22,14 +22,14 @@
   [super viewDidLoad];
   
   
-//  [[StarShareNetEngine sharedInstance] excuteWithRequestBean:HomePageRequest.alloc.init
-//                                                responseBean:HomePageResponse.alloc.init
-//                                                   successed:^(id requestDomainBean, id respondDomainBean,BOOL dataFromCache) {
-//                                                     NSLog(@"success");
-//                                                   }
-//                                                      failed:^(id requestDomainBean, id respondDomainBean, NSError *error) {
-//                                                        NSLog(@"error");
-//                                                      }];
+  [[StarShareNetEngine sharedInstance] excuteWithRequestBean:HomePageRequest.alloc.init
+                                                responseBean:HomePageResponse.alloc.init
+                                                   successed:^(id requestDomainBean, id respondDomainBean,BOOL dataFromCache) {
+                                                     NSLog(@"success");
+                                                   }
+                                                      failed:^(id requestDomainBean, id respondDomainBean, NSError *error) {
+                                                        NSLog(@"error");
+                                                      }];
   
   [[[SSAFNetWorkEngine alloc] init] downloadWithUrlString:@"https://ww2.sinaimg.cn/mw1024/005zWjpngy1fljqke2zgaj30t616i78l"
                                            securityPolicy:nil

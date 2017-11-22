@@ -267,18 +267,36 @@ static char *FirstRequested = "FirstRequested";
       }
     }
     
-    SSNetWorkLog(@"\n############################# \nRequest: %@ \nMethod: %@ \nParams: %@ \nPriority: %@ \nHeaders: %@ \nTimeout: %@ \nAllowsCellularAccess: %@ \nCacheEnable: %@ \nReadCachePolicy: %@ \nCachePolicy: %@ \nDataFromCache: %@ \n#############################",
-                 requestUrlString,
-                 [SSNetworkUtils requestMethod:method],
-                 fullParams,
-                 [SSNetworkUtils requestPriority:priority],
-                 headers,
-                 @(timeout),
-                 BOOL_STRING(allowsCellularAccess),
-                 BOOL_STRING(cacheEnable),
-                 [SSNetworkUtils readCachePolicy:[cachePolocy readCachePolicyWithRequestBean:requestBean]],
-                 [SSNetworkUtils cachePolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
-                 BOOL_STRING(cacheEnable && cacheData != nil));
+    SSNetWorkLog(@"\n \
+                   \n***************************************************************************** \
+                   \n*********************************** Begin *********************************** \
+                   \n***************************************************************************** \
+                   \nRequest: %@ \
+                   \nMethod: %@ \
+                   \nParams: %@ \
+                   \nPriority: %@ \
+                   \nHeaders: %@ \
+                   \nTimeout: %@ \
+                   \nAllowsCellularAccess: %@ \
+                   \nCacheEnable: %@ \
+                   \nReadCachePolicy: %@ \
+                   \nCachePolicy: %@ \
+                   \nDataFromCache: %@ \
+                   \n***************************************************************************** \
+                   \n*********************************** Ended *********************************** \
+                   \n***************************************************************************** \
+                   \n",
+                   requestUrlString,
+                   [SSNetworkUtils requestMethod:method],
+                   fullParams,
+                   [SSNetworkUtils requestPriority:priority],
+                   headers,
+                   @(timeout),
+                   BOOL_STRING(allowsCellularAccess),
+                   BOOL_STRING(cacheEnable),
+                   [SSNetworkUtils readCachePolicy:[cachePolocy readCachePolicyWithRequestBean:requestBean]],
+                   [SSNetworkUtils cachePolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
+                   BOOL_STRING(cacheEnable && cacheData != nil));
     
     ///< 读取缓存的策略是只有第一次请求读取缓存，并且是第一次请求，并且读取到了缓存数据，并且支持缓存
     if (readCachePolicy == SSNetRequestReadCacheFirst && cacheData && requestBean.isFirstRequested == NO) {
