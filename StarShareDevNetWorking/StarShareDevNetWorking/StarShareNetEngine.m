@@ -207,6 +207,18 @@ static char *FirstRequested = "FirstRequested";
       headers = [requestBean requestHeaderFieldValueDictionary];
     };
     
+    ///< 公共请求头
+    NSDictionary *publicHeaders = @{};
+    SS_SAFE_SEND_MESSAGE(requestBean, publicHeaders){
+      publicHeaders = [requestBean publicHeaders];
+    };
+    
+    ///< 拼接请求头
+    NSMutableDictionary *mHeaders = [NSMutableDictionary dictionaryWithCapacity:headers.count + publicHeaders.count];
+    [mHeaders addEntriesFromDictionary:headers];
+    [mHeaders addEntriesFromDictionary:publicHeaders];
+    headers = [mHeaders copy];
+    
     ///< POST Data
     SSNetRequestData *data = nil;
     SS_SAFE_SEND_MESSAGE(requestBean, requestData){
