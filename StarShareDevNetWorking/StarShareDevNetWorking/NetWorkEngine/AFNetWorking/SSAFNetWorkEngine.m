@@ -87,9 +87,9 @@
                                                   data:(in SSNetRequestData *)data
                                                timeout:(in NSTimeInterval)timeout
                                   allowsCellularAccess:(in BOOL)allowsCellularAccess
+                                              progress:(in SSNetRequestProgressCallback)progress
                                                success:(in SSNetRequestSuccessedCallback)success
-                                               failure:(in SSNetRequestFailedCallback)failure
-{
+                                               failure:(in SSNetRequestFailedCallback)failure {
   
   if (securityPolicy != nil && [securityPolicy isKindOfClass:[AFSecurityPolicy class]]) {
     _manager.securityPolicy = securityPolicy;
@@ -106,6 +106,7 @@
                                                         data:data
                                                      timeout:timeout
                                         allowsCellularAccess:allowsCellularAccess
+                                                    progress:progress
                                                      success:success
                                                      failure:failure
                                                        error:&requestSerializationError];
@@ -145,7 +146,6 @@
 
 - (id<SSNetRequestHandleProtocol>)downloadWithUrlString:(in NSString *)urlString
                                          securityPolicy:(in id)securityPolicy
-                                                 method:(in SSNetRequestMethod)method
                                       requestSerializer:(in SSNetRequestSerializer)requestSerializer
                                                priority:(in SSNetRequestPriority)priority
                                           authorization:(in NSArray *)authorization
@@ -164,7 +164,6 @@
   
   NSError * __autoreleasing requestSerializationError = nil;
   NSURLSessionDataTask *task = [self sessionTaskForUrlString:urlString
-                                                      method:method
                                            requestSerializer:requestSerializer
                                                authorization:authorization
                                                      headers:headers
@@ -222,6 +221,7 @@
                                              data:(SSNetRequestData *)data
                                           timeout:(NSTimeInterval)timeout
                              allowsCellularAccess:(BOOL)allowsCellularAccess
+                                         progress:(SSNetRequestProgressCallback)progress
                                           success:(SSNetRequestSuccessedCallback)success
                                           failure:(SSNetRequestFailedCallback)failure
                                             error:(NSError * _Nullable __autoreleasing *)error{
@@ -241,6 +241,8 @@
                        responseSerializer:AFResponseSerializer
                                 URLString:urlString
                                  argument:argument
+                                     data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -251,6 +253,7 @@
                                 URLString:urlString
                                  argument:argument
                                      data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -260,6 +263,8 @@
                        responseSerializer:AFResponseSerializer
                                 URLString:urlString
                                  argument:argument
+                                     data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -269,6 +274,8 @@
                        responseSerializer:AFResponseSerializer
                                 URLString:urlString
                                  argument:argument
+                                     data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -278,6 +285,8 @@
                        responseSerializer:AFResponseSerializer
                                 URLString:urlString
                                  argument:argument
+                                     data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -287,6 +296,8 @@
                        responseSerializer:AFResponseSerializer
                                 URLString:urlString
                                  argument:argument
+                                     data:data
+                                 progress:progress
                                   success:success
                                   failure:failure
                                     error:error];
@@ -296,7 +307,6 @@
 }
 
 - (NSURLSessionDataTask *)sessionTaskForUrlString:(NSString *)urlString
-                                           method:(SSNetRequestMethod)method
                                 requestSerializer:(SSNetRequestSerializer)requestSerializer
                                     authorization:(NSArray *)authorization
                                           headers:(NSDictionary *)headers
@@ -330,30 +340,12 @@
                               responseSerializer:(AFHTTPResponseSerializer *)responseSerializer
                                        URLString:(NSString *)URLString
                                         argument:(id)argument
-                                         success:(SSNetRequestSuccessedCallback)success
-                                         failure:(SSNetRequestFailedCallback)failure
-                                           error:(NSError * _Nullable __autoreleasing *)error {
-  return [self dataTaskWithHTTPMethod:method
-                    requestSerializer:requestSerializer
-                   responseSerializer:responseSerializer
-                            URLString:URLString
-                             argument:argument
-                                 data:nil
-                              success:success
-                              failure:failure
-                                error:error];
-}
-
-- (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
-                               requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-                              responseSerializer:(AFHTTPResponseSerializer *)responseSerializer
-                                       URLString:(NSString *)URLString
-                                        argument:(id)argument
                                             data:(SSNetRequestData *)data
+                                        progress:(SSNetRequestProgressCallback)progress
                                          success:(SSNetRequestSuccessedCallback)success
                                          failure:(SSNetRequestFailedCallback)failure
                                            error:(NSError * _Nullable __autoreleasing *)error {
-  NSMutableURLRequest *request = nil;
+  NSMutableURLRequest *request = nil; 
   id parameters = argument;
   if (data) {
     __block SSNetRequestData *requestData = data;
@@ -389,7 +381,9 @@
   
   __block NSURLSessionDataTask *dataTask = nil;
   dataTask = [_manager dataTaskWithRequest:request
-                         completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *_error) {
+                            uploadProgress:progress
+                          downloadProgress:nil
+                         completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error) {
                            if (_error && failure) {
                              failure(response,responseObject,_error);
                            }
@@ -431,7 +425,10 @@
                                               progress:(SSNetDownloadProgressCallback)progress
                                               complete:(SSNetDownloadCompleteCallback)complete
                                                  error:(NSError * _Nullable __autoreleasing *)error {
-  NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
+  NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET"
+                                                               URLString:URLString
+                                                              parameters:parameters
+                                                                   error:error];
   
   NSString *downloadTargetPath;
   BOOL isDirectory;
@@ -566,5 +563,4 @@
     return self.httpResponseSerializer;
   }
 }
-
 @end

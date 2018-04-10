@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "StarShareDevNetWorking"
-  s.version      = "0.2.5"
+  s.version      = "0.2.6"
   s.summary      = "NetWork Components for iOS ~"
 
   # This description is used to generate tags and improve search results.
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/StarShare/StarShareDevNetWorking.git", :tag => "0.2.5" }
+  s.source       = { :git => "https://github.com/StarShare/StarShareDevNetWorking.git", :tag => "0.2.6" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

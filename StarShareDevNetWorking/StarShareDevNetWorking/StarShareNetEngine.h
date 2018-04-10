@@ -34,5 +34,18 @@
                                                  failed:(in SSNetEngineRequestBeanFailedBlock)failed
                                                     end:(in SSNetEngineRequestBeanEndBlock)end;
 
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
+                                               progress:(in SSNetRequestProgressCallback)progress
+                                              successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
+                                                 failed:(in SSNetEngineRequestBeanFailedBlock)failed;
+
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
+                                                  begin:(in SSNetEngineRequestBeanBeginBlock)begin
+                                               progress:(in SSNetRequestProgressCallback)progress
+                                              successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
+                                                 failed:(in SSNetEngineRequestBeanFailedBlock)failed
+                                                    end:(in SSNetEngineRequestBeanEndBlock)end;
 @end
 

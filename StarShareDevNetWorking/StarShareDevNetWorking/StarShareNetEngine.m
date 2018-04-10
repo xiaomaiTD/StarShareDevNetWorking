@@ -112,9 +112,37 @@ static char *FirstRequested = "FirstRequested";
                                                   begin:(in SSNetEngineRequestBeanBeginBlock)begin
                                               successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
                                                  failed:(in SSNetEngineRequestBeanFailedBlock)failed
-                                                    end:(in SSNetEngineRequestBeanEndBlock)end
-{
-  
+                                                    end:(in SSNetEngineRequestBeanEndBlock)end{
+  return [self excuteWithRequestBean:requestBean
+                        responseBean:responseBean
+                               begin:begin
+                            progress:nil
+                           successed:successed
+                              failed:failed
+                                 end:end];
+}
+
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
+                                               progress:(in SSNetRequestProgressCallback)progress
+                                              successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
+                                                 failed:(in SSNetEngineRequestBeanFailedBlock)failed {
+  return [self excuteWithRequestBean:requestBean
+                        responseBean:responseBean
+                               begin:nil
+                            progress:progress
+                           successed:successed
+                              failed:failed
+                                 end:nil];
+}
+
+- (id<SSNetRequestHandleProtocol>)excuteWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
+                                           responseBean:(in SSNetDomainBeanResponse *)responseBean
+                                                  begin:(in SSNetEngineRequestBeanBeginBlock)begin
+                                               progress:(in SSNetRequestProgressCallback)progress
+                                              successed:(in SSNetEngineRequestBeanSuccessedBlock)successed
+                                                 failed:(in SSNetEngineRequestBeanFailedBlock)failed
+                                                    end:(in SSNetEngineRequestBeanEndBlock)end {
   if (begin != NULL) {
     begin();
   }
@@ -280,35 +308,35 @@ static char *FirstRequested = "FirstRequested";
     }
     
     SSNetWorkLog(@"\n \
-                   \n***************************************************************************** \
-                   \n*********************************** Begin *********************************** \
-                   \n***************************************************************************** \
-                   \nRequest: %@ \
-                   \nMethod: %@ \
-                   \nParams: %@ \
-                   \nPriority: %@ \
-                   \nHeaders: %@ \
-                   \nTimeout: %@ \
-                   \nAllowsCellularAccess: %@ \
-                   \nCacheEnable: %@ \
-                   \nReadCachePolicy: %@ \
-                   \nCachePolicy: %@ \
-                   \nDataFromCache: %@ \
-                   \n***************************************************************************** \
-                   \n*********************************** Ended *********************************** \
-                   \n***************************************************************************** \
-                   \n",
-                   requestUrlString,
-                   [SSNetworkUtils requestMethod:method],
-                   fullParams,
-                   [SSNetworkUtils requestPriority:priority],
-                   headers,
-                   @(timeout),
-                   BOOL_STRING(allowsCellularAccess),
-                   BOOL_STRING(cacheEnable),
-                   [SSNetworkUtils readCachePolicy:[cachePolocy readCachePolicyWithRequestBean:requestBean]],
-                   [SSNetworkUtils cachePolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
-                   BOOL_STRING(cacheEnable && cacheData != nil));
+                 \n***************************************************************************** \
+                 \n*********************************** Begin *********************************** \
+                 \n***************************************************************************** \
+                 \nRequest: %@ \
+                 \nMethod: %@ \
+                 \nParams: %@ \
+                 \nPriority: %@ \
+                 \nHeaders: %@ \
+                 \nTimeout: %@ \
+                 \nAllowsCellularAccess: %@ \
+                 \nCacheEnable: %@ \
+                 \nReadCachePolicy: %@ \
+                 \nCachePolicy: %@ \
+                 \nDataFromCache: %@ \
+                 \n***************************************************************************** \
+                 \n*********************************** Ended *********************************** \
+                 \n***************************************************************************** \
+                 \n",
+                 requestUrlString,
+                 [SSNetworkUtils requestMethod:method],
+                 fullParams,
+                 [SSNetworkUtils requestPriority:priority],
+                 headers,
+                 @(timeout),
+                 BOOL_STRING(allowsCellularAccess),
+                 BOOL_STRING(cacheEnable),
+                 [SSNetworkUtils readCachePolicy:[cachePolocy readCachePolicyWithRequestBean:requestBean]],
+                 [SSNetworkUtils cachePolicy:[cachePolocy cachePolicyWithRequestBean:requestBean]],
+                 BOOL_STRING(cacheEnable && cacheData != nil));
     
     ///< 读取缓存的策略是只有第一次请求读取缓存，并且是第一次请求，并且读取到了缓存数据，并且支持缓存
     if (readCachePolicy == SSNetRequestReadCacheFirst && cacheData && requestBean.isFirstRequested == NO) {
@@ -473,7 +501,7 @@ static char *FirstRequested = "FirstRequested";
           end();
         }
       });
-
+      
     };
     
     ///< 请求句柄
@@ -490,6 +518,7 @@ static char *FirstRequested = "FirstRequested";
                                                                                        data:data
                                                                                     timeout:timeout
                                                                        allowsCellularAccess:allowsCellularAccess
+                                                                                   progress:progress
                                                                                     success:requestSuccess
                                                                                     failure:^(NSURLResponse *response, id responseObject, NSError *error) {
                                                                                       

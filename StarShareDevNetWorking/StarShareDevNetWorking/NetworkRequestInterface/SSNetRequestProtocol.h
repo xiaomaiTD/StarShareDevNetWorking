@@ -43,12 +43,30 @@
                                                   data:(in SSNetRequestData *)data
                                                timeout:(in NSTimeInterval)timeout
                                   allowsCellularAccess:(in BOOL)allowsCellularAccess
+                                              progress:(in SSNetRequestProgressCallback)progress
                                                success:(in SSNetRequestSuccessedCallback)success
                                                failure:(in SSNetRequestFailedCallback)failure;
 
+/**
+ 网络下载接口定义 -> 统一定义网络请求接口
+
+ @param urlString 请求的完整链接
+ @param securityPolicy 安全策略
+ @param requestSerializer 请求序列化方式
+ @param priority 请求优先级
+ @param authorization 认证信息
+ @param headers 请求头
+ @param argument 请求参数
+ @param resumableDownloadPath 下载路径
+ @param timeout 超时时间
+ @param allowsCellularAccess 是否允许蜂窝网络
+ @param progress 下载进度
+ @param complete 下载完成回调
+ @param failure 失败回调
+ @return 请求句柄
+ */
 - (id<SSNetRequestHandleProtocol>)downloadWithUrlString:(in NSString *)urlString
                                          securityPolicy:(in id)securityPolicy
-                                                 method:(in SSNetRequestMethod)method
                                       requestSerializer:(in SSNetRequestSerializer)requestSerializer
                                                priority:(in SSNetRequestPriority)priority
                                           authorization:(in NSArray *)authorization
@@ -60,5 +78,4 @@
                                                progress:(in SSNetDownloadProgressCallback)progress
                                                complete:(in SSNetDownloadCompleteCallback)complete
                                                 failure:(in SSNetRequestFailedCallback)failure;
-
 @end

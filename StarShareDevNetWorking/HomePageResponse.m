@@ -14,14 +14,7 @@
 
 - (void)complementWithRequestBean:(in SSNetDomainBeanRequest *)requestBean respondBean:(in SSNetDomainBeanResponse *)respondBean isDataFromCache:(BOOL)isDataFromCache
 {
-  User *u = [User yy_modelWithJSON:respondBean.responseObject];
-}
-
-- (id)jsonStrucAndValueValidator
-{
-  return @{@"status":@(1),
-           @"msg":@"成功"
-           };
+  NSLog(@"complementWithRequestBean -> %@",respondBean.responseObject);
 }
 
 @end

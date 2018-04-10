@@ -10,6 +10,7 @@
 #import "SSNetWorkConstants.h"
 
 @interface SSNetRequestData : NSObject
+
 @property(nonatomic,assign) SSNetRequestDataType type;
 @property(nonatomic,strong) NSData *data;
 @property(nonatomic,strong) NSURL *fileUrl;

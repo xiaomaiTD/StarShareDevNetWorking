@@ -13,12 +13,12 @@
 
 - (NSString *)requestUrl
 {
-  return @"http://47.95.226.243:9090/api/app/getcode";
+  return @"https://www.v2ex.com/api/topics/hot.json";
 }
 
 - (id)requestArgument
 {
-  return @{@"phone":@"17744437544"};
+  return @{};
 }
 
 - (id<SSNetRequestCachePolocyProtocol>)cachePolocy
@@ -28,7 +28,7 @@
 
 - (SSNetRequestMethod)requestMethod
 {
-  return SSNetRequestMethodPOST;
+  return SSNetRequestMethodGET;
 }
 
 @end

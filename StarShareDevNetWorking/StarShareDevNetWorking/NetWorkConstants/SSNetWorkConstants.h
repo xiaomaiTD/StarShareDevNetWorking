@@ -95,9 +95,11 @@ NS_ENUM(NSInteger) {
   SSNetWorkEngineErrorResponseStatusCodeInvalid = 1006,
   SSNetWorkEngineErrorResponseJSONInvalid = 1007,
   SSNetWorkEngineErrorRequestArgumentInvalid = 1008,
-  SSNetWorkEngineErrorPostDataInvalid = 1009
+  SSNetWorkEngineErrorPostDataInvalid = 1009,
+  SSNetWorkEngineErrorUploadDataInvalid = 1010
 };
 
+typedef void (^SSNetRequestProgressCallback)(NSProgress *uploadProgress);
 typedef void (^SSNetRequestSuccessedCallback)(NSURLResponse * __unused response,id responseObject);
 typedef void (^SSNetRequestFailedCallback)(NSURLResponse * __unused response, id responseObject,NSError *error);
 typedef void (^SSNetDownloadCompleteCallback)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error);
