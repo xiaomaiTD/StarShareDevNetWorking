@@ -89,7 +89,7 @@
     }
     NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
     
-    YYCache *cache = [YYCache cacheWithName:[self cachePath]];
+    YYCache *cache = [SSYYNetWorkCacheEngine cacheInstance];
     
     if (cacheEffectiveTime > 0) {
       
@@ -213,7 +213,7 @@
       break;
     }
     NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
-    YYCache *cache = [YYCache cacheWithName:[self cachePath]];
+    YYCache *cache = [SSYYNetWorkCacheEngine cacheInstance];
     
     if (cacheEffectiveTime > 0) {
       
@@ -344,7 +344,7 @@
   }
   NSString *const cacheMetaName = [cacheName stringByAppendingString:@".Metadata"];
   
-  YYCache *cache = [YYCache cacheWithName:[self cachePath]];
+  YYCache *cache = [SSYYNetWorkCacheEngine cacheInstance];
   
   [cache removeObjectForKey:cacheName];
   [cache removeObjectForKey:cacheMetaName];
@@ -354,9 +354,21 @@
   return handle;
 }
 
+#pragma mark - cache
+
++ (YYCache *)cacheInstance{
+  static dispatch_once_t onceToken;
+  static YYCache *instance;
+  dispatch_once(&onceToken, ^{
+    instance = [YYCache cacheWithName:[self cachePath]];
+  });
+  
+  return instance;
+}
+
 #pragma mark - cache path
 
-- (NSString *)cachePath {
++ (NSString *)cachePath {
   if ([StarShareNetEngine sharedInstance].engineConfigation.cachePath == nil ||
       [StarShareNetEngine sharedInstance].engineConfigation.cachePath.length == 0) {
     [StarShareNetEngine sharedInstance].engineConfigation.cachePath = @"StarShareRequestCache";
