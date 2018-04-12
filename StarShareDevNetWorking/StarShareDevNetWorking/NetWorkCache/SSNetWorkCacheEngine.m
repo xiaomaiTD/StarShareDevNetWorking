@@ -51,4 +51,7 @@
                                                  error:error];
 }
 
+- (BOOL)hasCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean {
+  return [self.yyCacheEngine hasCacheWithRequestBean:requestBean];
+}
 @end

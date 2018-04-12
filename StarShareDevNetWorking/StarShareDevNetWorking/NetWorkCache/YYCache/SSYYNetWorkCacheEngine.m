@@ -354,6 +354,18 @@
   return handle;
 }
 
+- (BOOL)hasCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean {
+  NSError *error;
+  id<SSNetWorkCacheHandleProtocol> handle = [self readCacheWithRequestBean:requestBean
+                                                                     error:&error];
+  if (error != nil) {
+    return NO;
+  }
+  id data = [handle cacheData];
+  
+  return data != nil;
+}
+
 #pragma mark - cache
 
 + (YYCache *)cacheInstance{

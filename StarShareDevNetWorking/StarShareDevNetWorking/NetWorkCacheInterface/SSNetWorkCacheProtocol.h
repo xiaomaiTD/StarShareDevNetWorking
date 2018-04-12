@@ -29,4 +29,5 @@
 - (id<SSNetWorkCacheHandleProtocol>)clearCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean
                                                         error:(out NSError **)error;
 
+- (BOOL)hasCacheWithRequestBean:(in SSNetDomainBeanRequest *)requestBean;
 @end
